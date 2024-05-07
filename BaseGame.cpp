@@ -1,4 +1,4 @@
-incluse <iostream>
+#incluse <iostream>
 
 using namespace std;
 
@@ -12,32 +12,29 @@ int pdef = 0;
 
 
 
-string to_lower(string unfinished) 
-{
+string to_lower(string unfinished) {
   transform(unfinished.begin(), unfinished.end(), unfinished.begin(), [](unsigned char c) {return tolower(c);});
   return unfinished;
 }
 
-void attackf() 
-{
-  if (enemydef == 0)
-  {
+void attackf() {
+  if (enemydef == 0) {
     enemyhp = enemyhp - pdmg;
   }
-  elif (enemydef > 0)
-  {
+  elif (enemydef > 0) {
     enemydef = enemydef -pdmg;
-    if (enemdef < 0) {enemydef = 0;}
+    if (enemdef < 0) {
+      enemyhp = enemyhp + enemydef;
+      enemydef = 0;
+    }
   }
 }
-void defencef()
-{
+void defencef() {
   pdef += 2;
 }
 
 
-void actions(string move) 
-{
+void actions(string move) {
   if (pa == "a") {
     attackf();
   }
@@ -46,12 +43,24 @@ void actions(string move)
   }
 }
 
-void enemya()
-{
-  if (enemydef >= 1) 
-  {
-    cout << "Enemy is Attacking" << endl;
-    
+void enemya() {
+  if (enemydef >= 1) {
+    cout << "Enemy is Attacking!" << endl;
+    getline(cin, pa), cout << " " << endl;
+    if (pdef == 0) {
+      php = php - enemydmg;
+    }
+    elif (pdef > 0) {
+      pdef = pdef -enemydmg;
+      if (enemdef < 0) {
+        php = php + pdef;
+        pdef = 0;    
+      }
+    }
+  }
+  elif (enemydef == 0) {
+    cout << "Enemy is Shielding Up! << endl;
+    enemydef += 2;
   }
 }
 
