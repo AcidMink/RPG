@@ -18,23 +18,40 @@ string to_lower(string unfinished)
   return unfinished;
 }
 
-attackf() 
+void attackf() 
 {
-  enemyhp = enemyhp - pdmg;
+  if (enemydef == 0)
+  {
+    enemyhp = enemyhp - pdmg;
+  }
+  elif (enemydef > 0)
+  {
+    enemydef = enemydef -pdmg;
+    if (enemdef < 0) {enemydef = 0;}
+  }
 }
-defencef()
+void defencef()
 {
   pdef += 2;
 }
 
 
-actions(string move) 
+void actions(string move) 
 {
   if (pa == "a") {
     attackf();
   }
   elif (pa == "d") {
     defencef();
+  }
+}
+
+void enemya()
+{
+  if (enemydef >= 1) 
+  {
+    cout << "Enemy is Attacking" << endl;
+    
   }
 }
 
@@ -48,5 +65,9 @@ int main()
     cout << "Player, make your move: ", cin >> pa;
     pa = to_lower(pa);
     actions(pa);
+    if (enemyhp > 0) 
+    {
+      enemya();
+    }
   }
 }
