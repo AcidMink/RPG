@@ -12,13 +12,21 @@ string pa; //Player Action Input
 int enemyhp = 10;
 int enemydmg = 1;
 int enemydef = 0;
+int enemydefg = 2;
 int php = 10;
+int pmhp = 10;
 int pdmg = 1;
 int pdef = 0;
+int pdefg = 2;
 
 int enemymistake;
 int difficulty;
 int roundc = 0;
+int sic = 5;  //Shop Item Count
+
+int r1;
+int r2;
+int r3;
 
 
 string to_lower(string unfinished) {
@@ -32,14 +40,185 @@ void difficultys() {
   else if (pa == "3") {difficulty = 4;}
   else if (pa == "4") {difficulty = 5;}
   else if (pa == "5") {difficulty = 10;}
+  else if (pa == "0") {difficulty = 1;}
+}
+
+void showitems() {
+  if (r1 == 1) {
+    cout << "_____________" << endl;
+    cout << "|   Hp ++   |" << endl;
+    cout << "|-----------|" << endl;
+    cout << "| Increases |" << endl;
+    cout << "| Max HP +3 |" << endl;
+    cout << "|-----------|" << endl;
+  }
+  else if (r1 == 2) {
+    cout << "_____________" << endl;
+    cout << "|   Dmg ++  |" << endl;
+    cout << "|-----------|" << endl;
+    cout << "| Increases |" << endl;
+    cout << "|   Dmg +2  |" << endl;
+    cout << "|           |" << endl;
+    cout << "|-----------|" << endl;
+  }
+  else if (r1 == 3) {
+    cout << "_____________" << endl;
+    cout << "|   Hp +    |" << endl;
+    cout << "|-----------|" << endl;
+    cout << "| Increases |" << endl;
+    cout << "| Max HP +2 |" << endl;
+    cout << "|           |" << endl;
+    cout << "|-----------|" << endl;
+  }
+  else if (r1 == 4) {
+    cout << "_____________" << endl;
+    cout << "|   Dmg +   |" << endl;
+    cout << "|-----------|" << endl;
+    cout << "| Increases |" << endl;
+    cout << "|   Dmg +1  |" << endl;
+    cout << "|           |" << endl;
+    cout << "|-----------|" << endl;
+  }
+  else if (r1 == 5) {
+    cout << "_____________" << endl;
+    cout << "|  Def Gain |" << endl;
+    cout << "|-----------|" << endl;
+    cout << "| Increases |" << endl;
+    cout << "|  Def Gain |" << endl;
+    cout << "|    +1     |" << endl;
+    cout << "|-----------|" << endl;
+  }  
+
+    if (r2 == 1) {
+    cout << "_____________" << endl;
+    cout << "|   Hp ++   |" << endl;
+    cout << "|-----------|" << endl;
+    cout << "| Increases |" << endl;
+    cout << "| Max HP +3 |" << endl;
+    cout << "|-----------|" << endl;
+  }
+  else if (r2 == 2) {
+    cout << "_____________" << endl;
+    cout << "|   Dmg ++  |" << endl;
+    cout << "|-----------|" << endl;
+    cout << "| Increases |" << endl;
+    cout << "|   Dmg +2  |" << endl;
+    cout << "|           |" << endl;
+    cout << "|-----------|" << endl;
+  }
+  else if (r2 == 3) {
+    cout << "_____________" << endl;
+    cout << "|   Hp +    |" << endl;
+    cout << "|-----------|" << endl;
+    cout << "| Increases |" << endl;
+    cout << "| Max HP +2 |" << endl;
+    cout << "|           |" << endl;
+    cout << "|-----------|" << endl;
+  }
+  else if (r2 == 4) {
+    cout << "_____________" << endl;
+    cout << "|   Dmg +   |" << endl;
+    cout << "|-----------|" << endl;
+    cout << "| Increases |" << endl;
+    cout << "|   Dmg +1  |" << endl;
+    cout << "|           |" << endl;
+    cout << "|-----------|" << endl;
+  }
+  else if (r2 == 5) {
+    cout << "_____________" << endl;
+    cout << "|  Def Gain |" << endl;
+    cout << "|-----------|" << endl;
+    cout << "| Increases |" << endl;
+    cout << "|  Def Gain |" << endl;
+    cout << "|    +1     |" << endl;
+    cout << "|-----------|" << endl;
+  }  
+
+    if (r3 == 1) {
+    cout << "_____________" << endl;
+    cout << "|   Hp ++   |" << endl;
+    cout << "|-----------|" << endl;
+    cout << "| Increases |" << endl;
+    cout << "| Max HP +3 |" << endl;
+    cout << "|-----------|" << endl;
+  }
+  else if (r3 == 2) {
+    cout << "_____________" << endl;
+    cout << "|   Dmg ++  |" << endl;
+    cout << "|-----------|" << endl;
+    cout << "| Increases |" << endl;
+    cout << "|   Dmg +2  |" << endl;
+    cout << "|           |" << endl;
+    cout << "|-----------|" << endl;
+  }
+  else if (r3 == 3) {
+    cout << "_____________" << endl;
+    cout << "|   Hp +    |" << endl;
+    cout << "|-----------|" << endl;
+    cout << "| Increases |" << endl;
+    cout << "| Max HP +2 |" << endl;
+    cout << "|           |" << endl;
+    cout << "|-----------|" << endl;
+  }
+  else if (r3 == 4) {
+    cout << "_____________" << endl;
+    cout << "|   Dmg +   |" << endl;
+    cout << "|-----------|" << endl;
+    cout << "| Increases |" << endl;
+    cout << "|   Dmg +1  |" << endl;
+    cout << "|           |" << endl;
+    cout << "|-----------|" << endl;
+  }
+  else if (r3 == 5) {
+    cout << "_____________" << endl;
+    cout << "|  Def Gain |" << endl;
+    cout << "|-----------|" << endl;
+    cout << "| Increases |" << endl;
+    cout << "|  Def Gain |" << endl;
+    cout << "|    +1     |" << endl;
+    cout << "|-----------|" << endl;
+  }  
+}
+
+void usf() {
+  if (pa == "1") {
+    if (r1 == 1) {
+      pmph += 3;
+    }
+    if (r1 == 2) {
+      pdmg += 2;
+    }
+    if (r1 == 3) {
+      pmhp += 2;
+    }
+    if (r1 == 4) {
+      pdmg += 1;
+    }
+    if (r1 == 5) {
+      pdefg += 1;
+    }
+  }
+  else if (pa == "2") {
+
+  }
+  else if (pa == "2") {
+    
+  }
 }
 
 void upgradep() {
-  cout << "Coming Soon!" << endl;
-  cout << "Continue?(y/n)", cin >> pa; 
-  if ((pa == "y")||(pa == "n")) {
-    cout << "End of Upgrade Phase!" << endl;
+  cout << "1";
+  while(true) {
+    r1 = rand() % sic + 1;
+    r2 = rand() % sic + 1;
+    r3 = rand() % sic + 1;    
+    if ((r1 != r2)&&(r1 != r3)&&(r2 != r3)) {
+      break;
+    }
   }
+  showitems();
+  cin >> pa;
+  usf();
 }
 
 void attackf() {
