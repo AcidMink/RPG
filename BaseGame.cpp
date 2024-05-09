@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <map>
 #include <string>
 #include <list>
@@ -10,37 +11,45 @@ using namespace std;
 
 string pa; //Player Action Input
 int enemyhp = 10;
+int enemymhp = 10; //Enemy Max Hp
 int enemydmg = 1;
 int enemydef = 0;
-int enemydefg = 2;
+int enemydefg = 2;  //Enemy Defence Gain
 int php = 10;
-int pmhp = 10;
+int pmhp = 10;  //Player Max Hp
 int pdmg = 1;
 int pdef = 0;
-int pdefg = 2;
+int pdefg = 2;  //Player Defence Gain
 
-int enemymistake;
-int difficulty;
-int roundc = 0;
+int enemymistake;  //Enemy Mistake percentage Nr
+int difficulty;   //For calculating enemy defence freq.
+int roundc = 0;   //Round Count
 int sic = 5;  //Shop Item Count
 
-int r1;
-int r2;
-int r3;
+int r1;   //Shop rn item 1
+int r2;   //Shop rn item 2
+int r3;   //Shop rn item 3
+int r4;    //Enemy random upgrade
 
 
 string to_lower(string unfinished) {
   transform(unfinished.begin(), unfinished.end(), unfinished.begin(), [](unsigned char c) {return tolower(c);});
   return unfinished;
 }
+void infoSave(string winner_loser) {
+  std::ofstream outputFile("game_logs.txt", std::ios::app); // Open file for appending
+  outputFile << winner_loser << std::endl;
+  outputFile.close();
+}
+
 
 void difficultys() {
-  if (pa == "1") {difficulty = 2;}
-  else if (pa == "2") {difficulty = 3;}
-  else if (pa == "3") {difficulty = 4;}
-  else if (pa == "4") {difficulty = 5;}
-  else if (pa == "5") {difficulty = 10;}
-  else if (pa == "0") {difficulty = 1;}
+  if (pa == "1") {difficulty = 2; infoSave("Difficulty lvl 1:");}
+  else if (pa == "2") {difficulty = 3; infoSave("Difficulty lvl 2:");}
+  else if (pa == "3") {difficulty = 4; infoSave("Difficulty lvl 3:");}
+  else if (pa == "4") {difficulty = 5; infoSave("Difficulty lvl 4:");}
+  else if (pa == "5") {difficulty = 10; infoSave("Difficulty lvl 5:");}
+  else if (pa == "0") {difficulty = 1; infoSave("Difficulty lvl 0:");}
 }
 
 void showitems() {
@@ -85,7 +94,7 @@ void showitems() {
     cout << "|-----------|" << endl;
     cout << "| Increases |" << endl;
     cout << "|  Def Gain |" << endl;
-    cout << "|    +1     |" << endl;
+    cout << "|    +2     |" << endl;
     cout << "|-----------|" << endl;
   }  
 
@@ -130,7 +139,7 @@ void showitems() {
     cout << "|-----------|" << endl;
     cout << "| Increases |" << endl;
     cout << "|  Def Gain |" << endl;
-    cout << "|    +1     |" << endl;
+    cout << "|    +2     |" << endl;
     cout << "|-----------|" << endl;
   }  
 
@@ -175,7 +184,7 @@ void showitems() {
     cout << "|-----------|" << endl;
     cout << "| Increases |" << endl;
     cout << "|  Def Gain |" << endl;
-    cout << "|    +1     |" << endl;
+    cout << "|    +2     |" << endl;
     cout << "|-----------|" << endl;
   }  
 }
@@ -183,31 +192,86 @@ void showitems() {
 void usf() {
   if (pa == "1") {
     if (r1 == 1) {
-      pmph += 3;
+      pmhp += 3;
     }
-    if (r1 == 2) {
+    else if (r1 == 2) {
       pdmg += 2;
     }
-    if (r1 == 3) {
+    else if (r1 == 3) {
       pmhp += 2;
     }
-    if (r1 == 4) {
+    else if (r1 == 4) {
       pdmg += 1;
     }
-    if (r1 == 5) {
-      pdefg += 1;
+    else if (r1 == 5) {
+      pdefg += 2;
     }
   }
   else if (pa == "2") {
-
+    if (r2 == 1) {
+      pmhp += 3;
+    }
+    else if (r2 == 2) {
+      pdmg += 2;
+    }
+    else if (r2 == 3) {
+      pmhp += 2;
+    }
+    else if (r2 == 4) {
+      pdmg += 1;
+    }
+    else if (r2 == 5) {
+      pdefg += 2;
+    }
   }
-  else if (pa == "2") {
-    
+  else if (pa == "3") {
+    if (r3 == 1) {
+      pmhp += 3;
+    }
+    else if (r3 == 2) {
+      pdmg += 2;
+    }
+    else if (r3 == 3) {
+      pmhp += 2;
+    }
+    else if (r3 == 4) {
+      pdmg += 1;
+    }
+    else if (r3 == 5) {
+      pdefg += 2;
+    }    
   }
 }
 
+void upgradeEnemySelect() {
+  if (r4 == 1) {
+    enemymhp += 3;
+    cout << "Enemy Hp++" << endl;
+  }
+  else if (r4 == 2) {
+    enemydmg += 2;
+    cout << "Enemy Dmg++" << endl;
+  }
+  else if (r4 == 3) {
+    enemymhp += 2;
+    cout << "Enemy Hp+" << endl;
+  }
+  else if (r4 == 4) {
+    enemydmg += 1;
+    cout << "Enemy Dmg+" << endl;
+  }
+  else if (r4 == 5) {
+    enemydefg += 2;
+    cout << "Enemy DefG +2" << endl;
+  }
+}
+
+void enemyupgrade() {
+  r4 = rand() % 5 + 1;
+  upgradeEnemySelect();
+}
+
 void upgradep() {
-  cout << "1";
   while(true) {
     r1 = rand() % sic + 1;
     r2 = rand() % sic + 1;
@@ -217,8 +281,9 @@ void upgradep() {
     }
   }
   showitems();
-  cin >> pa;
+  cout << "Choose upgrade!(1-3) ", cin >> pa;
   usf();
+  enemyupgrade();
 }
 
 void attackf() {
@@ -234,7 +299,7 @@ void attackf() {
   }
 }
 void defencef() {
-  pdef += 2;
+  pdef += pdefg;
 }
 
 
@@ -265,11 +330,11 @@ void enemya() {
     }
     else if (enemydef == 0) {
       cout << "Enemy is Shielding Up!" << endl;
-      enemydef += 2;
+      enemydef += enemydefg;
     }
   }
   else if (enemymistake == 1) {
-    cout << "Enemy Fails to attack" << endl;
+    cout << "Enemy Misses the attack" << endl;
   }
 }
 
@@ -278,26 +343,33 @@ int main() {
   cout << "Choose Difficulty 1-5" << endl;
   cin >> pa;
   difficultys();
+  cout << "'a' to attack, 'd' to add shield!" << endl;
+  cout << "Type 'c' to continue!(press 'c') ", cin >> pa;
   while (true) {
     roundc += 1;
+    enemyhp = enemymhp;
+    php = pmhp;
+    enemydef = 0;
+    pdef = 0;
     while (true) {
-      cout << "____________________________" << endl;
-      cout << "|      |  Enemy  |  Player |" << endl;
-      cout << "|--------------------------|" << endl;
-      cout << "|  Hp  |    " << enemyhp << "    |    " << php << "    |" << endl;
-      cout << "| Dmg  |    " << enemydmg << "    |    " << pdmg << "    |" << endl;
-      cout << "| Def  |    " << enemydef << "    |    " << pdef << "    |" << endl;
-      cout << "|--------------------------|" << endl;
-      cout << "Player, make your move: ", cin >> pa;
-      pa = to_lower(pa);
-      actions();
       if ((enemyhp > 0)&&(php > 0)) {
+        cout << "____________________________" << endl;
+        cout << "|      |  Enemy  |  Player |" << endl;
+        cout << "|--------------------------|" << endl;
+        cout << "|  Hp  |    " << enemyhp << "    |    " << php << "    |" << endl;
+        cout << "| Dmg  |    " << enemydmg << "    |    " << pdmg << "    |" << endl;
+        cout << "| Def  |    " << enemydef << "    |    " << pdef << "    |" << endl;
+        cout << "|--------------------------|" << endl;
+        cout << "| DefG |    " << enemydefg << "    |    " << pdefg << "    |" << endl;
+        cout << "Player, make your move: ", cin >> pa;
+        pa = to_lower(pa);
+        actions();
         enemya();
       }
       else {
         cout << "End of Round!" << endl;
-        if (php > 0) {cout << "Player Wins Round!" << endl;}
-        else if (enemyhp > 0) {cout << "Player Loses Round!" << endl;}
+        if (php > 0) {cout << "Player Wins Round!" << endl; infoSave("Win");}
+        else if (enemyhp > 0) {cout << "Player Loses Round!" << endl; infoSave("Lose");}
         break;
       }
     }
@@ -305,6 +377,7 @@ int main() {
       cout << "Continue?(y/n)", cin >> pa;
       if (pa == "n") {
         cout << "End of Game!!" << endl;
+        infoSave("End of Game!\n");
         break;
       }
     }
