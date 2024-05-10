@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <cstdio>
 #include <iterator>
+#include <sstream>
 
 using namespace std;
 
@@ -24,7 +25,7 @@ int pdefg = 2;  //Player Defence Gain
 int enemymistake;  //Enemy Mistake percentage Nr
 int difficulty;   //For calculating enemy defence freq.
 int roundc = 0;   //Round Count
-int sic = 5;  //Shop Item Count
+int sic = 6;  //Shop Item Count
 
 int r1;   //Shop rn item 1
 int r2;   //Shop rn item 2
@@ -58,7 +59,8 @@ void showitems() {
     cout << "|   Hp ++   |" << endl;
     cout << "|-----------|" << endl;
     cout << "| Increases |" << endl;
-    cout << "| Max HP +3 |" << endl;
+    cout << "|   Max HP  |" << endl;
+    cout << "|    +10    |" << endl;
     cout << "|-----------|" << endl;
   }
   else if (r1 == 2) {
@@ -66,7 +68,7 @@ void showitems() {
     cout << "|   Dmg ++  |" << endl;
     cout << "|-----------|" << endl;
     cout << "| Increases |" << endl;
-    cout << "|   Dmg +2  |" << endl;
+    cout << "|   Dmg +3  |" << endl;
     cout << "|           |" << endl;
     cout << "|-----------|" << endl;
   }
@@ -75,7 +77,7 @@ void showitems() {
     cout << "|   Hp +    |" << endl;
     cout << "|-----------|" << endl;
     cout << "| Increases |" << endl;
-    cout << "| Max HP +2 |" << endl;
+    cout << "| Max HP +5 |" << endl;
     cout << "|           |" << endl;
     cout << "|-----------|" << endl;
   }
@@ -84,17 +86,26 @@ void showitems() {
     cout << "|   Dmg +   |" << endl;
     cout << "|-----------|" << endl;
     cout << "| Increases |" << endl;
-    cout << "|   Dmg +1  |" << endl;
+    cout << "|   Dmg +2  |" << endl;
     cout << "|           |" << endl;
     cout << "|-----------|" << endl;
   }
   else if (r1 == 5) {
     cout << "_____________" << endl;
-    cout << "|  Def Gain |" << endl;
+    cout << "| Def Gain+ |" << endl;
     cout << "|-----------|" << endl;
     cout << "| Increases |" << endl;
     cout << "|  Def Gain |" << endl;
     cout << "|    +2     |" << endl;
+    cout << "|-----------|" << endl;
+  }  
+  else if (r1 == 6) {
+    cout << "_____________" << endl;
+    cout << "|  Def G ++ |" << endl;
+    cout << "|-----------|" << endl;
+    cout << "| Increases |" << endl;
+    cout << "|  Def Gain |" << endl;
+    cout << "|    +3     |" << endl;
     cout << "|-----------|" << endl;
   }  
 
@@ -103,7 +114,8 @@ void showitems() {
     cout << "|   Hp ++   |" << endl;
     cout << "|-----------|" << endl;
     cout << "| Increases |" << endl;
-    cout << "| Max HP +3 |" << endl;
+    cout << "|   Max HP  |" << endl;
+    cout << "|    +10    |" << endl;
     cout << "|-----------|" << endl;
   }
   else if (r2 == 2) {
@@ -111,7 +123,7 @@ void showitems() {
     cout << "|   Dmg ++  |" << endl;
     cout << "|-----------|" << endl;
     cout << "| Increases |" << endl;
-    cout << "|   Dmg +2  |" << endl;
+    cout << "|   Dmg +3  |" << endl;
     cout << "|           |" << endl;
     cout << "|-----------|" << endl;
   }
@@ -120,7 +132,7 @@ void showitems() {
     cout << "|   Hp +    |" << endl;
     cout << "|-----------|" << endl;
     cout << "| Increases |" << endl;
-    cout << "| Max HP +2 |" << endl;
+    cout << "| Max HP +5 |" << endl;
     cout << "|           |" << endl;
     cout << "|-----------|" << endl;
   }
@@ -129,7 +141,7 @@ void showitems() {
     cout << "|   Dmg +   |" << endl;
     cout << "|-----------|" << endl;
     cout << "| Increases |" << endl;
-    cout << "|   Dmg +1  |" << endl;
+    cout << "|   Dmg +2  |" << endl;
     cout << "|           |" << endl;
     cout << "|-----------|" << endl;
   }
@@ -142,13 +154,23 @@ void showitems() {
     cout << "|    +2     |" << endl;
     cout << "|-----------|" << endl;
   }  
+  else if (r2 == 6) {
+    cout << "_____________" << endl;
+    cout << "|  Def G ++ |" << endl;
+    cout << "|-----------|" << endl;
+    cout << "| Increases |" << endl;
+    cout << "|  Def Gain |" << endl;
+    cout << "|    +3     |" << endl;
+    cout << "|-----------|" << endl;
+  } 
 
     if (r3 == 1) {
     cout << "_____________" << endl;
     cout << "|   Hp ++   |" << endl;
     cout << "|-----------|" << endl;
     cout << "| Increases |" << endl;
-    cout << "| Max HP +3 |" << endl;
+    cout << "|   Max HP  |" << endl;
+    cout << "|    +10    |" << endl;
     cout << "|-----------|" << endl;
   }
   else if (r3 == 2) {
@@ -156,7 +178,7 @@ void showitems() {
     cout << "|   Dmg ++  |" << endl;
     cout << "|-----------|" << endl;
     cout << "| Increases |" << endl;
-    cout << "|   Dmg +2  |" << endl;
+    cout << "|   Dmg +3  |" << endl;
     cout << "|           |" << endl;
     cout << "|-----------|" << endl;
   }
@@ -165,7 +187,7 @@ void showitems() {
     cout << "|   Hp +    |" << endl;
     cout << "|-----------|" << endl;
     cout << "| Increases |" << endl;
-    cout << "| Max HP +2 |" << endl;
+    cout << "| Max HP +5 |" << endl;
     cout << "|           |" << endl;
     cout << "|-----------|" << endl;
   }
@@ -174,7 +196,7 @@ void showitems() {
     cout << "|   Dmg +   |" << endl;
     cout << "|-----------|" << endl;
     cout << "| Increases |" << endl;
-    cout << "|   Dmg +1  |" << endl;
+    cout << "|   Dmg +2  |" << endl;
     cout << "|           |" << endl;
     cout << "|-----------|" << endl;
   }
@@ -187,87 +209,109 @@ void showitems() {
     cout << "|    +2     |" << endl;
     cout << "|-----------|" << endl;
   }  
+  else if (r3 == 6) {
+    cout << "_____________" << endl;
+    cout << "|  Def G ++ |" << endl;
+    cout << "|-----------|" << endl;
+    cout << "| Increases |" << endl;
+    cout << "|  Def Gain |" << endl;
+    cout << "|    +3     |" << endl;
+    cout << "|-----------|" << endl;
+  } 
 }
 
 void usf() {
   if (pa == "1") {
     if (r1 == 1) {
-      pmhp += 3;
+      pmhp += 10;
     }
     else if (r1 == 2) {
-      pdmg += 2;
+      pdmg += 3;
     }
     else if (r1 == 3) {
-      pmhp += 2;
+      pmhp += 5;
     }
     else if (r1 == 4) {
-      pdmg += 1;
+      pdmg += 2;
     }
     else if (r1 == 5) {
       pdefg += 2;
     }
+    else if (r1 == 6) {
+      pdefg += 3;
+    }
   }
   else if (pa == "2") {
     if (r2 == 1) {
-      pmhp += 3;
+      pmhp += 10;
     }
     else if (r2 == 2) {
-      pdmg += 2;
+      pdmg += 3;
     }
     else if (r2 == 3) {
-      pmhp += 2;
+      pmhp += 5;
     }
     else if (r2 == 4) {
-      pdmg += 1;
+      pdmg += 2;
     }
     else if (r2 == 5) {
       pdefg += 2;
     }
+    else if (r2 == 6) {
+      pdefg += 3;
+    }
   }
   else if (pa == "3") {
     if (r3 == 1) {
-      pmhp += 3;
+      pmhp += 10;
     }
     else if (r3 == 2) {
-      pdmg += 2;
+      pdmg += 3;
     }
     else if (r3 == 3) {
-      pmhp += 2;
+      pmhp += 5;
     }
     else if (r3 == 4) {
-      pdmg += 1;
+      pdmg += 2;
     }
     else if (r3 == 5) {
       pdefg += 2;
-    }    
+    }
+    else if (r3 == 6) {
+      pdefg += 3;
+    }
   }
 }
 
 void upgradeEnemySelect() {
   if (r4 == 1) {
-    enemymhp += 3;
+    enemymhp += 10;
     cout << "Enemy Hp++" << endl;
   }
   else if (r4 == 2) {
-    enemydmg += 2;
+    enemydmg += 3;
     cout << "Enemy Dmg++" << endl;
   }
   else if (r4 == 3) {
-    enemymhp += 2;
+    enemymhp += 5;
     cout << "Enemy Hp+" << endl;
   }
   else if (r4 == 4) {
-    enemydmg += 1;
+    enemydmg += 2;
     cout << "Enemy Dmg+" << endl;
   }
   else if (r4 == 5) {
     enemydefg += 2;
     cout << "Enemy DefG +2" << endl;
   }
+  else if (r4 == 6) {
+  enemydefg += 3;
+  cout << "Enemy DefG +3" << endl;
+  }
 }
 
 void enemyupgrade() {
-  r4 = rand() % 5 + 1;
+  r4 = rand() % sic + 1;
   upgradeEnemySelect();
 }
 
@@ -315,23 +359,67 @@ void actions() {
 void enemya() {
   enemymistake = rand() % difficulty + 1;
   if (enemymistake > 1) {
-    if ((enemydef >= 1)||(pdef == 0)) {
+    if (pdmg > enemydefg) {
       cout << "Enemy is Attacking!" << endl;
       if (pdef == 0) {
         php = php - enemydmg;
       }
       else if (pdef > 0) {
         pdef = pdef -enemydmg;
-        if (enemydef < 0) {
+        if (pdef < 0) {
           php = php + pdef;
           pdef = 0;    
         }
       }
     }
-    else if (enemydef == 0) {
-      cout << "Enemy is Shielding Up!" << endl;
-      enemydef += enemydefg;
+    else if ((enemydef == 0)&&(pdef == 0)&&(enemyhp > 5)) {
+      cout << "Enemy is Attacking!" << endl;
+      if (pdef == 0) {
+        php = php - enemydmg;
+      }
+      else if (pdef > 0) {
+        pdef = pdef -enemydmg;
+        if (pdef < 0) {
+          php = php + pdef;
+          pdef = 0;    
+        }
+      }
     }
+    else if ((enemydef == 0)&&(pdef == 0)&&(enemyhp < 6)) {
+      cout << "Enemy is Shielding Up!" << endl;
+      enemydef += enemydefg; 
+    }    
+    else if ((enemydef == 0)&&(pdef != 0)) {
+      cout << "Enemy is Shielding Up!" << endl;
+      enemydef += enemydefg; 
+    }
+    else if ((enemydef != 0)&&(pdef != 0)) {
+      cout << "Enemy is Attacking!" << endl;
+      if (pdef == 0) {
+        php = php - enemydmg;
+      }
+      else if (pdef > 0) {
+        pdef = pdef -enemydmg;
+        if (pdef < 0) {
+          php = php + pdef;
+          pdef = 0;    
+        }
+      }
+    }
+    else if ((enemydef != 0)&&(pdef == 0)) {
+      cout << "Enemy is Attacking!" << endl;
+      if (pdef == 0) {
+        php = php - enemydmg;
+      }
+      else if (pdef > 0) {
+        pdef = pdef -enemydmg;
+        if (pdef < 0) {
+          php = php + pdef;
+          pdef = 0;    
+        }
+      }      
+    }
+    else {cout << "Enemy is confused????????????????" << endl;}
   }
   else if (enemymistake == 1) {
     cout << "Enemy Misses the attack" << endl;
@@ -364,7 +452,9 @@ int main() {
         cout << "Player, make your move: ", cin >> pa;
         pa = to_lower(pa);
         actions();
-        enemya();
+        if (enemyhp > 0) {
+          enemya();          
+        }
       }
       else {
         cout << "End of Round!" << endl;
@@ -377,7 +467,15 @@ int main() {
       cout << "Continue?(y/n)", cin >> pa;
       if (pa == "n") {
         cout << "End of Game!!" << endl;
-        infoSave("End of Game!\n");
+        infoSave("End of Game!");
+        infoSave("Stats : hp, dmg, defg");
+        string spmhp = to_string(pmhp);
+        string spdmg = to_string(pdmg);
+        string spdefg = to_string(pdefg);
+        infoSave(spmhp);
+        infoSave(spdmg);
+        infoSave(spdefg);
+        infoSave("\n");
         break;
       }
     }

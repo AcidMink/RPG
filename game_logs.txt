@@ -6,3 +6,42 @@ Win
 Win
 End of Game!
 
+Difficulty lvl 5:
+Win
+Win
+Win
+Win
+Win
+Win
+Win
+End of Game!
+
+Difficulty lvl 5:
+Win
+Lose
+Lose
+Win
+Win
+Win
+Win
+Win
+Win
+Win
+Win
+Win
+Win
+Win
+End of Game!
+
+Difficulty lvl 0:
+Win
+Win
+Win
+Win
+Win
+End of Game!
+
+Stats : hp, dmg, defg
+15
+1
+5
