@@ -16,11 +16,16 @@ int enemymhp = 10; //Enemy Max Hp
 int enemydmg = 1;
 int enemydef = 0;
 int enemydefg = 2;  //Enemy Defence Gain
+int enemyStatusLenght;
+string enemyStatusType = "none";
+
 int php = 10;
 int pmhp = 10;  //Player Max Hp
 int pdmg = 1;
 int pdef = 0;
 int pdefg = 2;  //Player Defence Gain
+int pStatusLenght;
+string pStatusType = "none";
 
 int enemymistake;  //Enemy Mistake percentage Nr
 int difficulty;   //For calculating enemy defence freq.
@@ -212,6 +217,15 @@ void showitems() {
   else if (r3 == 6) {
     cout << "_____________" << endl;
     cout << "|  Def G ++ |" << endl;
+    cout << "|-----------|" << endl;
+    cout << "| Increases |" << endl;
+    cout << "|  Def Gain |" << endl;
+    cout << "|    +3     |" << endl;
+    cout << "|-----------|" << endl;
+  } 
+  else if (r3 == 6) {
+    cout << "_____________" << endl;
+    cout << "| Poison Atk |" << endl;
     cout << "|-----------|" << endl;
     cout << "| Increases |" << endl;
     cout << "|  Def Gain |" << endl;
@@ -442,18 +456,22 @@ int main() {
     while (true) {
       if ((enemyhp > 0)&&(php > 0)) {
         cout << "____________________________" << endl;
-        cout << "|      |  Enemy  |  Player |" << endl;
+        cout << "|~~~~~~|  Enemy  |  Player |" << endl;
         cout << "|--------------------------|" << endl;
         cout << "|  Hp  |    " << enemyhp << "    |    " << php << "    |" << endl;
         cout << "| Dmg  |    " << enemydmg << "    |    " << pdmg << "    |" << endl;
         cout << "| Def  |    " << enemydef << "    |    " << pdef << "    |" << endl;
         cout << "|--------------------------|" << endl;
         cout << "| DefG |    " << enemydefg << "    |    " << pdefg << "    |" << endl;
+        cout << "|--------------------------|" << endl;
+        cout << "|StatEf| " << enemyStatusType << " | " << pStatusType << "|" << endl;
+        cout << "|StatL |    " << enemyStatusLenght << "    |    " << pStatusLenght << "    |    " << endl;
+        cout << "|--------------------------|" << endl;        
         cout << "Player, make your move: ", cin >> pa;
         pa = to_lower(pa);
         actions();
         if (enemyhp > 0) {
-          enemya();          
+          enemya();
         }
       }
       else {
