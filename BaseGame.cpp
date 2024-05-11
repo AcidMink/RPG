@@ -16,21 +16,27 @@ int enemymhp = 10; //Enemy Max Hp
 int enemydmg = 1;
 int enemydef = 0;
 int enemydefg = 2;  //Enemy Defence Gain
+
+int enemyPoisonLenght;
 int enemyStatusLenght;
 string enemyStatusType = "none";
+bool enemyAbUnlockedPoison = false;
 
 int php = 10;
 int pmhp = 10;  //Player Max Hp
 int pdmg = 1;
 int pdef = 0;
 int pdefg = 2;  //Player Defence Gain
+
+int pPoisonLenght;
 int pStatusLenght;
 string pStatusType = "none";
+bool pAbUnlockedPoison = false;
 
 int enemymistake;  //Enemy Mistake percentage Nr
 int difficulty;   //For calculating enemy defence freq.
 int roundc = 0;   //Round Count
-int sic = 6;  //Shop Item Count
+int sic = 7;  //Shop Item Count
 
 int r1;   //Shop rn item 1
 int r2;   //Shop rn item 2
@@ -113,6 +119,16 @@ void showitems() {
     cout << "|    +3     |" << endl;
     cout << "|-----------|" << endl;
   }  
+  else if (r1 == 7) {
+    cout << "________________" << endl;
+    cout << "|   PoisonAtk  |" << endl;
+    cout << "|--------------|" << endl;
+    cout << "| Press'p', If |" << endl;
+    cout << "| enemy def =0 |" << endl;
+    cout << "| apply poison |" << endl;
+    cout << "| for 2 rounds |" << endl;
+    cout << "|--------------|" << endl;
+  } 
 
     if (r2 == 1) {
     cout << "_____________" << endl;
@@ -167,7 +183,17 @@ void showitems() {
     cout << "|  Def Gain |" << endl;
     cout << "|    +3     |" << endl;
     cout << "|-----------|" << endl;
-  } 
+  }
+  else if (r2 == 7) {
+    cout << "________________" << endl;
+    cout << "|   PoisonAtk  |" << endl;
+    cout << "|--------------|" << endl;
+    cout << "| Press'p', If |" << endl;
+    cout << "| enemy def =0 |" << endl;
+    cout << "| apply poison |" << endl;
+    cout << "| for 2 rounds |" << endl;
+    cout << "|--------------|" << endl;
+  }  
 
     if (r3 == 1) {
     cout << "_____________" << endl;
@@ -223,14 +249,15 @@ void showitems() {
     cout << "|    +3     |" << endl;
     cout << "|-----------|" << endl;
   } 
-  else if (r3 == 6) {
-    cout << "_____________" << endl;
-    cout << "| Poison Atk |" << endl;
-    cout << "|-----------|" << endl;
-    cout << "| Increases |" << endl;
-    cout << "|  Def Gain |" << endl;
-    cout << "|    +3     |" << endl;
-    cout << "|-----------|" << endl;
+  else if (r3 == 7) {
+    cout << "________________" << endl;
+    cout << "|  Poison Atk  |" << endl;
+    cout << "|--------------|" << endl;
+    cout << "| Press'p', If |" << endl;
+    cout << "| enemy def =0 |" << endl;
+    cout << "| apply poison |" << endl;
+    cout << "| for 2 rounds |" << endl;
+    cout << "|--------------|" << endl;
   } 
 }
 
@@ -254,6 +281,12 @@ void usf() {
     else if (r1 == 6) {
       pdefg += 3;
     }
+    else if (r1 == 7) {
+      if (pAbUnlockedPoison == false) {
+        pAbUnlockedPoison == true;
+      }
+      pPoisonLenght += 2;
+    }
   }
   else if (pa == "2") {
     if (r2 == 1) {
@@ -274,6 +307,12 @@ void usf() {
     else if (r2 == 6) {
       pdefg += 3;
     }
+    else if (r2 == 7) {
+      if (pAbUnlockedPoison == false) {
+        pAbUnlockedPoison == true;
+      }
+      pPoisonLenght += 2;
+    }
   }
   else if (pa == "3") {
     if (r3 == 1) {
@@ -293,6 +332,12 @@ void usf() {
     }
     else if (r3 == 6) {
       pdefg += 3;
+    }
+    else if (r3 == 7) {
+      if (pAbUnlockedPoison == false) {
+        pAbUnlockedPoison == true;
+      }
+      pPoisonLenght += 2;
     }
   }
 }
@@ -359,6 +404,10 @@ void attackf() {
 void defencef() {
   pdef += pdefg;
 }
+void applyPoison() {
+  enemyStatusType = "Poison";
+  enemyStatusLenght = pPoisonLenght;
+}
 
 
 void actions() {
@@ -367,6 +416,9 @@ void actions() {
   }
   else if (pa == "d") {
     defencef();
+  }
+  else if ((pa == "p")&&(pAbUnlockedPoison == true)) {
+    applyPoison();
   }
 }
 
@@ -437,6 +489,15 @@ void enemya() {
   }
   else if (enemymistake == 1) {
     cout << "Enemy Misses the attack" << endl;
+  }
+  if (enemyStatusType != "none") {
+    if ((enemyStatusType == "Poison")&&(enemyStatusLenght > 0)) {
+      enemyhp = enemyhp - 1;
+      enemyStatusLenght -= 1;
+    }
+    if ((enemyStatusType == "Poison")&&(enemyStatusLenght == 0)) {
+      enemyStatusType = "none";
+    }
   }
 }
 
