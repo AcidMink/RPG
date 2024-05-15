@@ -1,6 +1,51 @@
 Difficulty lvl 1:
-Difficulty lvl 1:
 Win
 Win
 Win
 Win
+Win
+Win
+Win
+Win
+Win
+Win
+Win
+Win
+Win
+Lose
+Win
+Win
+Win
+Win
+Win
+Win
+Win
+Win
+Win
+Win
+Win
+Win
+Win
+Lose
+Win
+Win
+Win
+Win
+Win
+Win
+Win
+Win
+Win
+Win
+Win
+Win
+Win
+Win
+Win
+Win
+Win
+End of Game!
+Stats : hp, dmg, defg
+105
+75
+8

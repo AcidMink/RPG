@@ -282,10 +282,9 @@ void usf() {
       pdefg += 3;
     }
     else if (r1 == 7) {
-      if (pAbUnlockedPoison == false) {
-        pAbUnlockedPoison == true;
-      }
+      pAbUnlockedPoison = true;
       pPoisonLenght += 2;
+      cout << "u?" << pAbUnlockedPoison;
     }
   }
   else if (pa == "2") {
@@ -308,9 +307,7 @@ void usf() {
       pdefg += 3;
     }
     else if (r2 == 7) {
-      if (pAbUnlockedPoison == false) {
-        pAbUnlockedPoison == true;
-      }
+      pAbUnlockedPoison = true;
       pPoisonLenght += 2;
     }
   }
@@ -334,9 +331,7 @@ void usf() {
       pdefg += 3;
     }
     else if (r3 == 7) {
-      if (pAbUnlockedPoison == false) {
-        pAbUnlockedPoison == true;
-      }
+      pAbUnlockedPoison = true;
       pPoisonLenght += 2;
     }
   }
@@ -405,8 +400,14 @@ void defencef() {
   pdef += pdefg;
 }
 void applyPoison() {
-  enemyStatusType = "Poison";
-  enemyStatusLenght = pPoisonLenght;
+  if ((enemydef == 0)&&(enemyStatusType == "none")) {
+    enemyStatusType = "Poison";
+    enemyStatusLenght = pPoisonLenght;    
+    cout << "Poison effect succesful!(" << pPoisonLenght << ")" << endl;
+  }
+  else if (enemydef > 0) {
+    cout << "Failed to apply poison, enemy def too high!" << endl;
+  }
 }
 
 
@@ -514,6 +515,10 @@ int main() {
     php = pmhp;
     enemydef = 0;
     pdef = 0;
+    enemyStatusType = "none";
+    pStatusType = "none";
+    enemyStatusLenght = 0;
+    pStatusLenght = 0;
     while (true) {
       if ((enemyhp > 0)&&(php > 0)) {
         cout << "____________________________" << endl;
@@ -547,14 +552,24 @@ int main() {
       if (pa == "n") {
         cout << "End of Game!!" << endl;
         infoSave("End of Game!");
-        infoSave("Stats : hp, dmg, defg");
+        infoSave("Stats : hp, dmg, defg  ;; Enemy: hp, dmg, defg");
         string spmhp = to_string(pmhp);
         string spdmg = to_string(pdmg);
         string spdefg = to_string(pdefg);
         infoSave(spmhp);
         infoSave(spdmg);
         infoSave(spdefg);
-        infoSave("\n");
+        string senemymhp = to_string(enemymhp);
+        string senemydmg = to_string(enemydmg);
+        string senemydefg = to_string(enemydefg);
+        infoSave(senemymhp);
+        infoSave(senemydmg);
+        infoSave(senemydefg);
+        string spPoisonUn = to_string(pAbUnlockedPoison);
+        string senemyPoisonUn = to_string(enemyAbUnlockedPoison);
+        infoSave("Abilities(Player/enemy): Poison,");
+        infoSave(spPoisonUn);
+        infoSave(senemyPoisonUn);
         break;
       }
     }
