@@ -530,7 +530,7 @@ int main() {
         cout << "|--------------------------|" << endl;
         cout << "| DefG |    " << enemydefg << "    |    " << pdefg << "    |" << endl;
         cout << "|--------------------------|" << endl;
-        cout << "|StatEf| " << enemyStatusType << " | " << pStatusType << "|" << endl;
+        cout << "|StatEf|  " << enemyStatusType << "  |  " << pStatusType << "  |" << endl;
         cout << "|StatL |    " << enemyStatusLenght << "    |    " << pStatusLenght << "    |    " << endl;
         cout << "|--------------------------|" << endl;        
         cout << "Player, make your move: ", cin >> pa;
