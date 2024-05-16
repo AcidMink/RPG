@@ -119,3 +119,52 @@ Stats : hp, dmg, defg  ;; Enemy: hp, dmg, defg
 Abilities(Player/enemy): Poison,
 1
 0
+Difficulty lvl 3:
+Win
+Win
+Win
+Lose
+Win
+Win
+Win
+Win
+Win
+Win
+Win
+Win
+Win
+Win
+Win
+Win
+End of Game!
+Stats : hp, dmg, defg  ;; Enemy: hp, dmg, defg
+40
+16
+11
+50
+8
+17
+Abilities(Player/enemy): Poison,
+1
+0
+Difficulty lvl 1:
+Win
+Win
+Win
+Win
+Win
+End of Game!
+Stats : hp, dmg, defg  ;; Enemy: hp, dmg, defg
+10
+3
+5
+25
+4
+4
+Abilities(Player/enemy): Poison,
+1
+0
+Difficulty lvl 1:
+Win
+Win
+Win

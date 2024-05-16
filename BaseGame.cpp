@@ -33,6 +33,11 @@ int pStatusLenght;
 string pStatusType = "none";
 bool pAbUnlockedPoison = false;
 
+
+
+int aiBehaviour_gainShield;
+int aiBehaviour_stackShield = 0;
+
 int enemymistake;  //Enemy Mistake percentage Nr
 int difficulty;   //For calculating enemy defence freq.
 int roundc = 0;   //Round Count
@@ -126,7 +131,7 @@ void showitems() {
     cout << "| Press'p', If |" << endl;
     cout << "| enemy def =0 |" << endl;
     cout << "| apply poison |" << endl;
-    cout << "| for 2 rounds |" << endl;
+    cout << "| for 3 rounds |" << endl;
     cout << "|--------------|" << endl;
   } 
 
@@ -191,7 +196,7 @@ void showitems() {
     cout << "| Press'p', If |" << endl;
     cout << "| enemy def =0 |" << endl;
     cout << "| apply poison |" << endl;
-    cout << "| for 2 rounds |" << endl;
+    cout << "| for 3 rounds |" << endl;
     cout << "|--------------|" << endl;
   }  
 
@@ -256,7 +261,7 @@ void showitems() {
     cout << "| Press'p', If |" << endl;
     cout << "| enemy def =0 |" << endl;
     cout << "| apply poison |" << endl;
-    cout << "| for 2 rounds |" << endl;
+    cout << "| for 3 rounds |" << endl;
     cout << "|--------------|" << endl;
   } 
 }
@@ -283,8 +288,7 @@ void usf() {
     }
     else if (r1 == 7) {
       pAbUnlockedPoison = true;
-      pPoisonLenght += 2;
-      cout << "u?" << pAbUnlockedPoison;
+      pPoisonLenght += 3;
     }
   }
   else if (pa == "2") {
@@ -308,7 +312,7 @@ void usf() {
     }
     else if (r2 == 7) {
       pAbUnlockedPoison = true;
-      pPoisonLenght += 2;
+      pPoisonLenght += 3;
     }
   }
   else if (pa == "3") {
@@ -332,7 +336,7 @@ void usf() {
     }
     else if (r3 == 7) {
       pAbUnlockedPoison = true;
-      pPoisonLenght += 2;
+      pPoisonLenght += 3;
     }
   }
 }
@@ -413,9 +417,11 @@ void applyPoison() {
 
 void actions() {
   if (pa == "a") {
+    aiBehaviour_stackShield = 0;
     attackf();
   }
   else if (pa == "d") {
+    aiBehaviour_stackShield += 1;
     defencef();
   }
   else if ((pa == "p")&&(pAbUnlockedPoison == true)) {
@@ -423,8 +429,10 @@ void actions() {
   }
 }
 
-void enemya() {
+void enemyAI() {
   enemymistake = rand() % difficulty + 1;
+  aiBehaviour_gainShield = enemymhp * 0.5;
+
   if (enemymistake > 1) {
     if (pdmg > enemydefg) {
       cout << "Enemy is Attacking!" << endl;
@@ -439,7 +447,7 @@ void enemya() {
         }
       }
     }
-    else if ((enemydef == 0)&&(pdef == 0)&&(enemyhp > 5)) {
+    else if ((enemydef == 0)&&(pdef == 0)&&(enemyhp > aiBehaviour_gainShield)) {
       cout << "Enemy is Attacking!" << endl;
       if (pdef == 0) {
         php = php - enemydmg;
@@ -452,11 +460,15 @@ void enemya() {
         }
       }
     }
-    else if ((enemydef == 0)&&(pdef == 0)&&(enemyhp < 6)) {
+    else if ((enemydef == 0)&&(pdef == 0)&&(enemyhp < aiBehaviour_gainShield)) {
       cout << "Enemy is Shielding Up!" << endl;
       enemydef += enemydefg; 
     }    
     else if ((enemydef == 0)&&(pdef != 0)) {
+      cout << "Enemy is Shielding Up!" << endl;
+      enemydef += enemydefg; 
+    }
+    else if (aiBehaviour_stackShield > 2) {
       cout << "Enemy is Shielding Up!" << endl;
       enemydef += enemydefg; 
     }
@@ -537,7 +549,7 @@ int main() {
         pa = to_lower(pa);
         actions();
         if (enemyhp > 0) {
-          enemya();
+          enemyAI();
         }
       }
       else {
