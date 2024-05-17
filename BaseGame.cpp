@@ -366,6 +366,10 @@ void upgradeEnemySelect() {
   enemydefg += 3;
   cout << "Enemy DefG +3" << endl;
   }
+  else if (r4 == 7) {
+  enemyPoisonLenght += 3;
+  cout << "Enemy Poison Lenght +3" << endl;
+  }
 }
 
 void enemyupgrade() {
@@ -427,6 +431,16 @@ void actions() {
   else if ((pa == "p")&&(pAbUnlockedPoison == true)) {
     applyPoison();
   }
+
+  if (pStatusType != "none") {
+    if ((pStatusType == "Poison")&&(pStatusLenght > 0)) {
+      php = php - 1;
+      pStatusLenght -= 1;
+    }
+  }    
+  if ((pStatusType != "none")&&(pStatusLenght == 0)) {
+      pStatusType = "none";
+  }
 }
 
 void enemyAI() {
@@ -435,7 +449,7 @@ void enemyAI() {
 
   if (enemymistake > 1) {
     if (pdmg > enemydefg) {
-      cout << "Enemy is Attacking!" << endl;
+      cout << "1   Enemy is Attacking!" << endl;
       if (pdef == 0) {
         php = php - enemydmg;
       }
@@ -447,8 +461,26 @@ void enemyAI() {
         }
       }
     }
-    else if ((enemydef == 0)&&(pdef == 0)&&(enemyhp > aiBehaviour_gainShield)) {
-      cout << "Enemy is Attacking!" << endl;
+    else if ((enemydmg > pdmg)&&(pdefg < enemydmg)&&(enemyhp > php)) {
+      cout << "2   Enemy is Attacking!" << endl;
+      if (pdef == 0) {
+        php = php - enemydmg;
+      }
+      else if (pdef > 0) {
+        pdef = pdef -enemydmg;
+        if (pdef < 0) {
+          php = php + pdef;
+          pdef = 0;    
+        }
+      }      
+    }    
+    else if ((pdef == 0)&&(enemydmg < enemyPoisonLenght)&&(pStatusType == "none")) {
+      cout << "1  Enemy does Poison Attack" << endl;
+      pStatusType = "Poison";
+      pStatusLenght = enemyPoisonLenght;
+    }
+    else if ((enemydef == 0)&&(pdef == 0)&&(enemyhp >= aiBehaviour_gainShield)) {
+      cout << "3   Enemy is Attacking!" << endl;
       if (pdef == 0) {
         php = php - enemydmg;
       }
@@ -461,19 +493,19 @@ void enemyAI() {
       }
     }
     else if ((enemydef == 0)&&(pdef == 0)&&(enemyhp < aiBehaviour_gainShield)) {
-      cout << "Enemy is Shielding Up!" << endl;
+      cout << "1   Enemy is Shielding Up!" << endl;
       enemydef += enemydefg; 
     }    
     else if ((enemydef == 0)&&(pdef != 0)) {
-      cout << "Enemy is Shielding Up!" << endl;
+      cout << "2   Enemy is Shielding Up!" << endl;
       enemydef += enemydefg; 
     }
     else if (aiBehaviour_stackShield > 2) {
-      cout << "Enemy is Shielding Up!" << endl;
+      cout << "3   Enemy is Shielding Up!" << endl;
       enemydef += enemydefg; 
     }
     else if ((enemydef != 0)&&(pdef != 0)) {
-      cout << "Enemy is Attacking!" << endl;
+      cout << "4   Enemy is Attacking!" << endl;
       if (pdef == 0) {
         php = php - enemydmg;
       }
@@ -486,7 +518,7 @@ void enemyAI() {
       }
     }
     else if ((enemydef != 0)&&(pdef == 0)) {
-      cout << "Enemy is Attacking!" << endl;
+      cout << "5   Enemy is Attacking!" << endl;
       if (pdef == 0) {
         php = php - enemydmg;
       }
@@ -577,9 +609,9 @@ int main() {
         infoSave(senemymhp);
         infoSave(senemydmg);
         infoSave(senemydefg);
-        string spPoisonUn = to_string(pAbUnlockedPoison);
-        string senemyPoisonUn = to_string(enemyAbUnlockedPoison);
-        infoSave("Abilities(Player/enemy): Poison,");
+        string spPoisonUn = to_string(pPoisonLenght);
+        string senemyPoisonUn = to_string(enemyPoisonLenght);
+        infoSave("Abilities(Player/enemy): PoisonLen,");
         infoSave(spPoisonUn);
         infoSave(senemyPoisonUn);
         break;
