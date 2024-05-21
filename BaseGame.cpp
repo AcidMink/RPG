@@ -266,6 +266,17 @@ void showitems() {    //Shows Available Upgrades
     cout << "| for 3 rounds |" << endl;
     cout << "|--------------|" << endl;
   } 
+  else if (r3 == 8) {
+    cout << "________________" << endl;
+    cout << "| Heal Ability |" << endl;
+    cout << "|--------------|" << endl;
+    cout << "|   Press'h'   |" << endl;
+    cout << "| to heal +10% |" << endl;
+    cout << "| once while in|" << endl;
+    cout << "| combat. Lose |" << endl;
+    cout << "|  25% max HP  |" << endl;
+    cout << "|--------------|" << endl;
+  } 
 }
 
 void usf() {    //For Giving Correct Upgrade for Chosen Card
