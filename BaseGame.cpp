@@ -10,33 +10,32 @@
 
 using namespace std;
 
-string pa; //Player Action Input
-int enemyhp = 10;
-int enemymhp = 10; //Enemy Max Hp
-int enemydmg = 1;
-int enemydef = 0;
+string pa;    //Player Action Input
+int enemyhp = 10;    //Enemy Current HP in Round
+int enemymhp = 10;   //Enemy Max Hp
+int enemydmg = 1;   //Enemy Damage
+int enemydef = 0;   //Enemy Current Defence in Round
 int enemydefg = 2;  //Enemy Defence Gain
 
-int enemyPoisonLenght;
-int enemyStatusLenght;
-string enemyStatusType = "none";
-bool enemyAbUnlockedPoison = false;
+int enemyPoisonLenght;    //How Long Enemy Gives Poison for
+int enemyStatusLenght;    //How Long is a Status Effect on Enemy for
+string enemyStatusType = "none";    //What Status Type is on Enemy
 
-int php = 10;
+int php = 10;   //Player HP in Round
 int pmhp = 10;  //Player Max Hp
-int pdmg = 1;
-int pdef = 0;
+int pdmg = 1;   //Player Damage
+int pdef = 0;   //Player Current Defence in Round
 int pdefg = 2;  //Player Defence Gain
 
-int pPoisonLenght;
-int pStatusLenght;
-string pStatusType = "none";
-bool pAbUnlockedPoison = false;
+int pPoisonLenght;    //How Long Player Gives Poison for
+int pStatusLenght;    //How Long is a Status Effect on Player for
+string pStatusType = "none";    //What Type of Effect Player has
+bool pAbUnlockedPoison = false;   //Has Player Unlocked Poison
 
 
 
-int aiBehaviour_gainShield;
-int aiBehaviour_stackShield = 0;
+int aiBehaviour_gainShield;   //Behaviour for Focusing on Shieding when HP Drops Below 50%
+int aiBehaviour_stackShield = 0;    //Behaviour for Gaining Multiple Shields when Player gains Shield Multiple Times
 
 int enemymistake;  //Enemy Mistake percentage Nr
 int difficulty;   //For calculating enemy defence freq.
@@ -48,19 +47,22 @@ int r2;   //Shop rn item 2
 int r3;   //Shop rn item 3
 int r4;    //Enemy random upgrade
 
+int winCounter = 0;   //Counter for Wins in a Game
+int lossCounter = 0;    //Counter for Losses in a Game
 
-string to_lower(string unfinished) {
+
+string to_lower(string unfinished) {    //Turns Input into Lower-Case
   transform(unfinished.begin(), unfinished.end(), unfinished.begin(), [](unsigned char c) {return tolower(c);});
   return unfinished;
 }
-void infoSave(string winner_loser) {
+void infoSave(string winner_loser) {    //For Saving Info in game_logs.txt
   std::ofstream outputFile("game_logs.txt", std::ios::app); // Open file for appending
   outputFile << winner_loser << std::endl;
   outputFile.close();
 }
 
 
-void difficultys() {
+void difficultys() {    //Set the Difficulty for a the Game
   if (pa == "1") {difficulty = 2; infoSave("Difficulty lvl 1:");}
   else if (pa == "2") {difficulty = 3; infoSave("Difficulty lvl 2:");}
   else if (pa == "3") {difficulty = 4; infoSave("Difficulty lvl 3:");}
@@ -69,7 +71,7 @@ void difficultys() {
   else if (pa == "0") {difficulty = 1; infoSave("Difficulty lvl 0:");}
 }
 
-void showitems() {
+void showitems() {    //Shows Available Upgrades
   if (r1 == 1) {
     cout << "_____________" << endl;
     cout << "|   Hp ++   |" << endl;
@@ -266,7 +268,7 @@ void showitems() {
   } 
 }
 
-void usf() {
+void usf() {    //For Giving Correct Upgrade for Chosen Card
   if (pa == "1") {
     if (r1 == 1) {
       pmhp += 10;
@@ -341,7 +343,7 @@ void usf() {
   }
 }
 
-void upgradeEnemySelect() {
+void upgradeEnemySelect() {   //Gives Random Upgrade for Enemy
   if (r4 == 1) {
     enemymhp += 10;
     cout << "Enemy Hp++" << endl;
@@ -372,12 +374,12 @@ void upgradeEnemySelect() {
   }
 }
 
-void enemyupgrade() {
+void enemyupgrade() {  //Creates the Random Upgrade Number and Picks it out
   r4 = rand() % sic + 1;
   upgradeEnemySelect();
 }
 
-void upgradep() {
+void upgradep() {   //Makes Sure You can't get same Upgrades in Shop
   while(true) {
     r1 = rand() % sic + 1;
     r2 = rand() % sic + 1;
@@ -392,7 +394,7 @@ void upgradep() {
   enemyupgrade();
 }
 
-void attackf() {
+void attackf() {    //Player Attacks the enemy
   if (enemydef == 0) {
     enemyhp = enemyhp - pdmg;
   }
@@ -404,7 +406,7 @@ void attackf() {
     }
   }
 }
-void defencef() {
+void defencef() {   //Defence Action
   pdef += pdefg;
 }
 void applyPoison() {
@@ -419,7 +421,7 @@ void applyPoison() {
 }
 
 
-void actions() {
+void actions() {    //For taking Effect Damage and Allowing Player to do Actions
   if (pa == "a") {
     aiBehaviour_stackShield = 0;
     attackf();
@@ -443,7 +445,7 @@ void actions() {
   }
 }
 
-void enemyAI() {
+void enemyAI() {    //All Enemy Behaviours
   enemymistake = rand() % difficulty + 1;
   aiBehaviour_gainShield = enemymhp * 0.5;
 
@@ -546,7 +548,7 @@ void enemyAI() {
   }
 }
 
-int main() {
+int main() {    //Base for the Game
   srand (time(NULL));
   cout << "Choose Difficulty 1-5" << endl;
   cin >> pa;
@@ -586,8 +588,8 @@ int main() {
       }
       else {
         cout << "End of Round!" << endl;
-        if (php > 0) {cout << "Player Wins Round!" << endl; infoSave("Win");}
-        else if (enemyhp > 0) {cout << "Player Loses Round!" << endl; infoSave("Lose");}
+        if (php > 0) {cout << "Player Wins Round!" << endl; winCounter += 1;}
+        else if (enemyhp > 0) {cout << "Player Loses Round!" << endl; lossCounter += 1;}
         break;
       }
     }
@@ -595,25 +597,25 @@ int main() {
       cout << "Continue?(y/n)", cin >> pa;
       if (pa == "n") {
         cout << "End of Game!!" << endl;
-        infoSave("End of Game!");
+        infoSave("Wins/Losses");
+        
         infoSave("Stats : hp, dmg, defg  ;; Enemy: hp, dmg, defg");
-        string spmhp = to_string(pmhp);
-        string spdmg = to_string(pdmg);
-        string spdefg = to_string(pdefg);
-        infoSave(spmhp);
-        infoSave(spdmg);
-        infoSave(spdefg);
-        string senemymhp = to_string(enemymhp);
-        string senemydmg = to_string(enemydmg);
-        string senemydefg = to_string(enemydefg);
-        infoSave(senemymhp);
-        infoSave(senemydmg);
-        infoSave(senemydefg);
-        string spPoisonUn = to_string(pPoisonLenght);
-        string senemyPoisonUn = to_string(enemyPoisonLenght);
+        string spMHp = to_string(pmhp);
+        string spDmg = to_string(pdmg);
+        string spDefg = to_string(pdefg);
+        string spStats = spMHp + " " + spDmg + " " + spDefg;
+        infoSave(spStats);
+        string sEnemyMHp = to_string(enemymhp);
+        string sEnemyDmg = to_string(enemydmg);
+        string sEnemyDefg = to_string(enemydefg);
+        string sEnemyStats = sEnemyMHp + " " + sEnemyDmg + " " + sEnemyDefg;
+        infoSave(sEnemyStats);
+        string spPoisonUnlock = to_string(pPoisonLenght);
+        string sEnemyPoisonUnlock = to_string(enemyPoisonLenght);
         infoSave("Abilities(Player/enemy): PoisonLen,");
-        infoSave(spPoisonUn);
-        infoSave(senemyPoisonUn);
+        string sPoisonUnlocks = spPoisonUnlock + " " + sEnemyPoisonUnlock;
+        infoSave(sPoisonUnlocks);
+        infoSave("End of Game! \n")
         break;
       }
     }
