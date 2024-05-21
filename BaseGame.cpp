@@ -18,6 +18,7 @@ int enemydef = 0;   //Enemy Current Defence in Round
 int enemydefg = 2;  //Enemy Defence Gain
 
 int enemyPoisonLenght;    //How Long Enemy Gives Poison for
+float enemyHealSize;    //How much % of Hp it Heals
 int enemyStatusLenght;    //How Long is a Status Effect on Enemy for
 string enemyStatusType = "none";    //What Status Type is on Enemy
 
@@ -27,10 +28,15 @@ int pdmg = 1;   //Player Damage
 int pdef = 0;   //Player Current Defence in Round
 int pdefg = 2;  //Player Defence Gain
 
-int pPoisonLenght;    //How Long Player Gives Poison for
+
 int pStatusLenght;    //How Long is a Status Effect on Player for
 string pStatusType = "none";    //What Type of Effect Player has
+
 bool pAbUnlockedPoison = false;   //Has Player Unlocked Poison
+int pPoisonLenght;    //How Long Player Gives Poison for
+bool pAbunlockedHeal = false;   //Has Player Unlocked Heal
+float pHealSize;    //how much % HP Heal Gives
+bool pUsedHeal = false;    //Use Heal in Round
 
 
 
@@ -40,7 +46,7 @@ int aiBehaviour_stackShield = 0;    //Behaviour for Gaining Multiple Shields whe
 int enemymistake;  //Enemy Mistake percentage Nr
 int difficulty;   //For calculating enemy defence freq.
 int roundc = 0;   //Round Count
-int sic = 7;  //Shop Item Count
+int sic = 8;  //Shop Item Count
 
 int r1;   //Shop rn item 1
 int r2;   //Shop rn item 2
@@ -136,6 +142,17 @@ void showitems() {    //Shows Available Upgrades
     cout << "| for 3 rounds |" << endl;
     cout << "|--------------|" << endl;
   } 
+  else if (r1 == 8) {
+    cout << "________________" << endl;
+    cout << "| Heal Ability |" << endl;
+    cout << "|--------------|" << endl;
+    cout << "|   Press'h'   |" << endl;
+    cout << "| to heal +10% |" << endl;
+    cout << "| once while in|" << endl;
+    cout << "| combat. Lose |" << endl;
+    cout << "|  25% max HP  |" << endl;
+    cout << "|--------------|" << endl;
+  } 
 
     if (r2 == 1) {
     cout << "_____________" << endl;
@@ -201,6 +218,17 @@ void showitems() {    //Shows Available Upgrades
     cout << "| for 3 rounds |" << endl;
     cout << "|--------------|" << endl;
   }  
+  else if (r2 == 8) {
+    cout << "________________" << endl;
+    cout << "| Heal Ability |" << endl;
+    cout << "|--------------|" << endl;
+    cout << "|   Press'h'   |" << endl;
+    cout << "| to heal +10% |" << endl;
+    cout << "| once while in|" << endl;
+    cout << "| combat. Lose |" << endl;
+    cout << "|  25% max HP  |" << endl;
+    cout << "|--------------|" << endl;
+  } 
 
     if (r3 == 1) {
     cout << "_____________" << endl;
@@ -303,6 +331,10 @@ void usf() {    //For Giving Correct Upgrade for Chosen Card
       pAbUnlockedPoison = true;
       pPoisonLenght += 3;
     }
+    else if (r1 == 8) {
+      pAbunlockedHeal = true;
+      pHealSize += 0.1;
+    }
   }
   else if (pa == "2") {
     if (r2 == 1) {
@@ -327,6 +359,10 @@ void usf() {    //For Giving Correct Upgrade for Chosen Card
       pAbUnlockedPoison = true;
       pPoisonLenght += 3;
     }
+    else if (r2 == 8) {
+      pAbunlockedHeal = true;
+      pHealSize += 0.1;
+    }
   }
   else if (pa == "3") {
     if (r3 == 1) {
@@ -350,6 +386,10 @@ void usf() {    //For Giving Correct Upgrade for Chosen Card
     else if (r3 == 7) {
       pAbUnlockedPoison = true;
       pPoisonLenght += 3;
+    }
+    else if (r3 == 8) {
+      pAbunlockedHeal = true;
+      pHealSize += 0.1;
     }
   }
 }
@@ -420,7 +460,7 @@ void attackf() {    //Player Attacks the enemy
 void defencef() {   //Defence Action
   pdef += pdefg;
 }
-void applyPoison() {
+void applyPoison() {    //Apply Poison if Enemy has no Defence
   if ((enemydef == 0)&&(enemyStatusType == "none")) {
     enemyStatusType = "Poison";
     enemyStatusLenght = pPoisonLenght;    
@@ -429,6 +469,13 @@ void applyPoison() {
   else if (enemydef > 0) {
     cout << "Failed to apply poison, enemy def too high!" << endl;
   }
+}
+void applyHeal() {    //Apply Heal to Self
+  pUsedHeal = true;
+  cout << pHealSize << " " << pmhp << endl;
+  int pGainHp_Heal = pHealSize * pmhp;
+  cout << "???" << pGainHp_Heal;
+  php += pGainHp_Heal;
 }
 
 
@@ -444,6 +491,11 @@ void actions() {    //For taking Effect Damage and Allowing Player to do Actions
   else if ((pa == "p")&&(pAbUnlockedPoison == true)) {
     applyPoison();
   }
+  else if ((pa == "h")&&(pAbunlockedHeal == true)&&(pUsedHeal == false)) {
+    applyHeal();
+    cout << "?" << endl;
+  }
+  else {cout << "Action Failed..." << endl;}
 
   if (pStatusType != "none") {
     if ((pStatusType == "Poison")&&(pStatusLenght > 0)) {
@@ -576,6 +628,7 @@ int main() {    //Base for the Game
     pStatusType = "none";
     enemyStatusLenght = 0;
     pStatusLenght = 0;
+    pUsedHeal = false;
     while (true) {
       if ((enemyhp > 0)&&(php > 0)) {
         cout << "____________________________" << endl;
@@ -621,12 +674,12 @@ int main() {    //Base for the Game
         string sEnemyDefg = to_string(enemydefg);
         string sEnemyStats = sEnemyMHp + " " + sEnemyDmg + " " + sEnemyDefg;
         infoSave(sEnemyStats);
-        string spPoisonUnlock = to_string(pPoisonLenght);
-        string sEnemyPoisonUnlock = to_string(enemyPoisonLenght);
+        string spPoisonLenght = to_string(pPoisonLenght);
+        string sEnemyPoisonLenght = to_string(enemyPoisonLenght);
         infoSave("Abilities(Player/enemy): PoisonLen,");
-        string sPoisonUnlocks = spPoisonUnlock + " " + sEnemyPoisonUnlock;
-        infoSave(sPoisonUnlocks);
-        infoSave("End of Game! \n")
+        string sPoisonLenghts = spPoisonLenght + " " + sEnemyPoisonLenght;
+        infoSave(sPoisonLenghts);
+        infoSave("End of Game! \n");
         break;
       }
     }
