@@ -1,26 +1,15 @@
-Difficulty lvl 1:
+Difficulty lvl 0:
 Wins/Losses
-5 0
+21 0
 Stats : hp, dmg, defg ;
-10 6 2
+35 16 2
 Enemy: hp, dmg, defg ;
-10 1 2
+55 11 10
 Abilities(Player/enemy): PoisonLen,
-0 0
+18 9
 Abilities(Player/enemy): HealSize,
-20%  40%
-End of Game! 
-
-Difficulty lvl 4:
-Wins/Losses
-12 0
-Stats : hp, dmg, defg ;
-10 8 23
-Enemy: hp, dmg, defg ;
-35 16 5
-Abilities(Player/enemy): PoisonLen,
-0 3
-Abilities(Player/enemy): HealSize,
-0%  10%
+30%  20%
+Abilities(Player/enemy): Flame Damage(hpDamage/shieldDamage),
+2/4  0/0
 End of Game! 
 

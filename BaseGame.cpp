@@ -24,7 +24,10 @@ int enemyPoisonLenght;    //How Long Enemy Gives Poison for
 bool enemyAbUnlockedHeal = false;
 float enemyHealSize;    //How much % of Hp it Heals
 bool enemyUsedHeal = false;    //Enemy use Heal Once in Round
-
+bool enemyAbUnlockedFlame = false;    //Has Enemy Unlocked Flame
+int enemyFireLenght = 2;    //How many Turns Flame Lasts
+int enemyFireDmg;   //Enemy Flame Non-Shield Dmg
+int enemyDealShieldDmg;   //Damage the Enemy does to Shields
 
 
 int php = 10;   //Player HP in Round
@@ -33,15 +36,18 @@ int pdmg = 1;   //Player Damage
 int pdef = 0;   //Player Current Defence in Round
 int pdefg = 2;  //Player Defence Gain
 
-
 int pStatusLenght;    //How Long is a Status Effect on Player for
 string pStatusType = "none";    //What Type of Effect Player has
 
 bool pAbUnlockedPoison = false;   //Has Player Unlocked Poison
 int pPoisonLenght;    //How Long Player Gives Poison for
-bool pAbunlockedHeal = false;   //Has Player Unlocked Heal
-float pHealSize;    //how much % HP Heal Gives
+bool pAbUnlockedHeal = false;   //Has Player Unlocked Heal
+float pHealSize;    //How much % HP Heal Gives
 bool pUsedHeal = false;    //Use Heal once in Round
+bool pAbUnlockedFlame = false;    //Has Player Unlocked Flame
+int pFireLenght = 2;    //How many Turns Flame Lasts
+int pFireDmg;   //Flame Non-Shield Dmg
+int pDealShieldDmg;   //Dmage the Player does to Shields
 
 
 
@@ -51,7 +57,7 @@ int aiBehaviour_stackShield = 0;    //Behaviour for Gaining Multiple Shields whe
 int enemymistake;  //Enemy Mistake percentage Nr
 int difficulty;   //For calculating enemy defence freq.
 int roundc = 0;   //Round Count
-int sic = 8;  //Shop Item Count
+int sic = 9;  //Shop Item Count
 
 int r1;   //Shop rn item 1
 int r2;   //Shop rn item 2
@@ -157,6 +163,19 @@ void showitems() {    //Shows Available Upgrades
     cout << "|  in combat.  |" << endl;
     cout << "|--------------|" << endl;
   } 
+  else if (r1 == 9) {
+    cout << "_________________" << endl;
+    cout << "|  Flame spell  |" << endl;
+    cout << "|---------------|" << endl;
+    cout << "|  Press'f' to  |" << endl;
+    cout << "| set the enemy |" << endl;
+    cout << "| on fire for 2 |" << endl;
+    cout << "|   turns and   |" << endl;
+    cout << "| dealing +1dmg |" << endl;
+    cout << "| to hp and x2  |" << endl;
+    cout << "|  to shields.  |" << endl;
+    cout << "|---------------|" << endl;
+  } 
 
     if (r2 == 1) {
     cout << "_____________" << endl;
@@ -231,9 +250,22 @@ void showitems() {    //Shows Available Upgrades
     cout << "|  once while  |" << endl;
     cout << "|  in combat.  |" << endl;
     cout << "|--------------|" << endl;
-  } 
+  }
+  else if (r2 == 9) {
+    cout << "_________________" << endl;
+    cout << "|  Flame spell  |" << endl;
+    cout << "|---------------|" << endl;
+    cout << "|  Press'f' to  |" << endl;
+    cout << "| set the enemy |" << endl;
+    cout << "| on fire for 2 |" << endl;
+    cout << "|   turns and   |" << endl;
+    cout << "| dealing +1dmg |" << endl;
+    cout << "| to hp and x2  |" << endl;
+    cout << "|  to shields.  |" << endl;
+    cout << "|---------------|" << endl;
+  }  
 
-    if (r3 == 1) {
+  if (r3 == 1) {
     cout << "_____________" << endl;
     cout << "|   Hp ++   |" << endl;
     cout << "|-----------|" << endl;
@@ -307,6 +339,19 @@ void showitems() {    //Shows Available Upgrades
     cout << "|  in combat.  |" << endl;
     cout << "|--------------|" << endl;
   } 
+  else if (r3 == 9) {
+    cout << "_________________" << endl;
+    cout << "|  Flame spell  |" << endl;
+    cout << "|---------------|" << endl;
+    cout << "|  Press'f' to  |" << endl;
+    cout << "| set the enemy |" << endl;
+    cout << "| on fire for 2 |" << endl;
+    cout << "|   turns and   |" << endl;
+    cout << "| dealing +1dmg |" << endl;
+    cout << "| to hp and x2  |" << endl;
+    cout << "|  to shields.  |" << endl;
+    cout << "|---------------|" << endl;
+  } 
 }
 
 void usf() {    //For Giving Correct Upgrade for Chosen Card
@@ -334,8 +379,12 @@ void usf() {    //For Giving Correct Upgrade for Chosen Card
       pPoisonLenght += 3;
     }
     else if (r1 == 8) {
-      pAbunlockedHeal = true;
+      pAbUnlockedHeal = true;
       pHealSize += 0.1;
+    }
+    else if (r1 == 9) {
+      pAbUnlockedFlame = true;
+      pFireDmg += 1;
     }
   }
   else if (pa == "2") {
@@ -362,10 +411,15 @@ void usf() {    //For Giving Correct Upgrade for Chosen Card
       pPoisonLenght += 3;
     }
     else if (r2 == 8) {
-      pAbunlockedHeal = true;
+      pAbUnlockedHeal = true;
       pHealSize += 0.1;
     }
+    else if (r2 == 9) {
+      pAbUnlockedFlame = true;
+      pFireDmg += 1;
+    }
   }
+
   else if (pa == "3") {
     if (r3 == 1) {
       pmhp += 10;
@@ -390,8 +444,12 @@ void usf() {    //For Giving Correct Upgrade for Chosen Card
       pPoisonLenght += 3;
     }
     else if (r3 == 8) {
-      pAbunlockedHeal = true;
+      pAbUnlockedHeal = true;
       pHealSize += 0.1;
+    }
+    else if (r3 == 9) {
+      pAbUnlockedFlame = true;
+      pFireDmg += 1;
     }
   }
 }
@@ -483,7 +541,14 @@ void applyHeal() {    //Apply Heal to Self
   php += pGainHp_Heal;
   cout << "Healed +" << pGainHp_Heal << " Hp" << endl;
 }
-
+void applyFlame() {   //Apply Flame to Enemy deal 2x Damage to Shield
+  if (enemyStatusType == "none") {
+    enemyStatusType = "Flame";
+    enemyStatusLenght = pFireLenght;
+    cout << "Succesfully Applied Flame!(" << pFireDmg << "/" << pDealShieldDmg << ")" << endl;
+  }
+  else {cout << "Failed to Aplly Flame" << endl;}
+}
 
 void actions() {    //For taking Effect Damage and Allowing Player to do Actions
   if (pa == "a") {
@@ -497,8 +562,11 @@ void actions() {    //For taking Effect Damage and Allowing Player to do Actions
   else if ((pa == "p")&&(pAbUnlockedPoison == true)) {
     applyPoison();
   }
-  else if ((pa == "h")&&(pAbunlockedHeal == true)&&(pUsedHeal == false)) {
+  else if ((pa == "h")&&(pAbUnlockedHeal == true)&&(pUsedHeal == false)) {
     applyHeal();
+  }
+  else if ((pa == "f")&&(pAbUnlockedFlame == true)) {
+    applyFlame();
   }
   else {cout << "Action Failed..." << endl;}
 
@@ -518,11 +586,11 @@ void enemyAI() {    //All Enemy Behaviours
   aiBehaviour_gainShield = enemymhp * 0.5;
   int enemyGainHp_Heal = enemymhp * enemyHealSize;
   if (enemymistake > 1) {
-    else if (aiBehaviour_stackShield > 2) {
+    if (aiBehaviour_stackShield > 2) {
       cout << "1   Enemy is Shielding Up!" << endl;
       enemydef += enemydefg; 
     }
-    if (pdmg > enemydefg) {
+    else if (pdmg > enemydefg) {
       cout << "1   Enemy is Attacking!" << endl;
       if (pdef == 0) {
         php = php - enemydmg;
@@ -612,10 +680,26 @@ void enemyAI() {    //All Enemy Behaviours
   }
   if (enemyStatusType != "none") {
     if ((enemyStatusType == "Poison")&&(enemyStatusLenght > 0)) {
-      enemyhp = enemyhp - 1;
+      enemyhp -= 1;
+      enemyStatusLenght -= 1;
+    }
+    else if ((enemyStatusType == "Flame")&&(enemyStatusLenght > 0)) {
+      if (enemydef != 0) {
+        enemydef -= pDealShieldDmg;
+        if (enemydef < 0) {
+          enemydef = 0;
+          enemyhp -= 1;
+        }
+      }
+      else if (enemydef == 0) {
+        enemyhp -= pFireDmg;
+      }
       enemyStatusLenght -= 1;
     }
     if ((enemyStatusType == "Poison")&&(enemyStatusLenght == 0)) {
+      enemyStatusType = "none";
+    }
+    else if ((enemyStatusType == "Flame")&&(enemyStatusLenght == 0)) {
       enemyStatusType = "none";
     }
   }
@@ -640,6 +724,8 @@ int main() {    //Base for the Game
     pStatusLenght = 0;
     pUsedHeal = false;
     enemyUsedHeal = false;
+    pDealShieldDmg = pFireDmg * 2;
+    enemyDealShieldDmg = enemyFireDmg * 2;
     while (true) {
       if ((enemyhp > 0)&&(php > 0)) {
         cout << "____________________________" << endl;
@@ -701,6 +787,13 @@ int main() {    //Base for the Game
         string senemyHealSize_percentage = to_string(enemyHealSize_percentage);
         string sHealSizes = spHealSize_percentage + "%  " + senemyHealSize_percentage + "%";
         infoSave(sHealSizes);
+        infoSave("Abilities(Player/enemy): Flame Damage(hpDamage/shieldDamage),");
+        string spFlameDmg = to_string(pFireDmg);
+        string senemyFlameDmg = to_string(enemyFireDmg);
+        string spDealShieldDmg = to_string(pDealShieldDmg);
+        string senemyDealShieldDmg = to_string(enemyDealShieldDmg);
+        string sFlameInfo = spFlameDmg + "/" + spDealShieldDmg + "  " + senemyFlameDmg + "/" + senemyDealShieldDmg;
+        infoSave(sFlameInfo);
         infoSave("End of Game! \n");
         break;
       }
