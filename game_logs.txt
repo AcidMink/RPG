@@ -10,3 +10,17 @@ Abilities(Player/enemy): PoisonLen,
 Abilities(Player/enemy): HealSize,
 20%  40%
 End of Game! 
+
+Difficulty lvl 4:
+Wins/Losses
+12 0
+Stats : hp, dmg, defg ;
+10 8 23
+Enemy: hp, dmg, defg ;
+35 16 5
+Abilities(Player/enemy): PoisonLen,
+0 3
+Abilities(Player/enemy): HealSize,
+0%  10%
+End of Game! 
+

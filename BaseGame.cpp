@@ -433,8 +433,7 @@ void upgradeEnemySelect() {   //Gives Random Upgrade for Enemy
 }
 
 void enemyupgrade() {  //Creates the Random Upgrade Number and Picks it out
-  r4 = 8;
-  //r4 = rand() % sic + 1;
+  r4 = rand() % sic + 1;
   upgradeEnemySelect();
 }
 
@@ -519,6 +518,10 @@ void enemyAI() {    //All Enemy Behaviours
   aiBehaviour_gainShield = enemymhp * 0.5;
   int enemyGainHp_Heal = enemymhp * enemyHealSize;
   if (enemymistake > 1) {
+    else if (aiBehaviour_stackShield > 2) {
+      cout << "1   Enemy is Shielding Up!" << endl;
+      enemydef += enemydefg; 
+    }
     if (pdmg > enemydefg) {
       cout << "1   Enemy is Attacking!" << endl;
       if (pdef == 0) {
@@ -569,14 +572,10 @@ void enemyAI() {    //All Enemy Behaviours
       cout << "1  Enemy Used Heal!(" << enemyGainHp_Heal << ")" << endl;
     }
     else if ((enemydef == 0)&&(pdef == 0)&&(enemyhp < aiBehaviour_gainShield)) {
-      cout << "1   Enemy is Shielding Up!" << endl;
+      cout << "2   Enemy is Shielding Up!" << endl;
       enemydef += enemydefg; 
     }    
     else if ((enemydef == 0)&&(pdef != 0)) {
-      cout << "2   Enemy is Shielding Up!" << endl;
-      enemydef += enemydefg; 
-    }
-    else if (aiBehaviour_stackShield > 2) {
       cout << "3   Enemy is Shielding Up!" << endl;
       enemydef += enemydefg; 
     }
