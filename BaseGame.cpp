@@ -55,7 +55,9 @@ int aiBehaviour_gainShield;   //Behaviour for Focusing on Shieding when HP Drops
 int aiBehaviour_stackShield = 0;    //Behaviour for Gaining Multiple Shields when Player gains Shield Multiple Times
 
 int enemymistake;  //Enemy Mistake percentage Nr
-int difficulty;   //For calculating enemy defence freq.
+int difficulty = 100;   //For calculating enemy defence freq.
+int challangeType;
+int funType;
 int roundc = 0;   //Round Count
 int sic = 9;  //Shop Item Count
 
@@ -85,7 +87,10 @@ void difficultys() {    //Set the Difficulty for a the Game
   else if (pa == "3") {difficulty = 4; infoSave("Difficulty lvl 3:");}
   else if (pa == "4") {difficulty = 5; infoSave("Difficulty lvl 4:");}
   else if (pa == "5") {difficulty = 10; infoSave("Difficulty lvl 5:");}
+  else if (pa == "6") {difficulty = 10; challangeType = 1; infoSave("Difficulty lvl 6:");}
+  else if (pa == "double") {difficulty = 10; funType = 1; infoSave("Difficulty lvl 5(fun):");}
   else if (pa == "0") {difficulty = 1; infoSave("Difficulty lvl 0:");}
+  else {cout << "Impossible Selected" << endl; infoSave("Difficulty lvl 100:");}
 }
 
 void showitems() {    //Shows Available Upgrades
@@ -497,7 +502,6 @@ void upgradeEnemySelect() {   //Gives Random Upgrade for Enemy
 
 void enemyupgrade() {  //Creates the Random Upgrade Number and Picks it out
   r4 = rand() % sic + 1;
-  r4 = 9;
   upgradeEnemySelect();
 }
 
@@ -513,6 +517,22 @@ void upgradep() {   //Makes Sure You can't get same Upgrades in Shop
   showitems();
   cout << "Choose upgrade!(1-3) ", cin >> pa;
   usf();
+  if (funType == 1) {
+    while(true) {
+      r1 = rand() % sic + 1;
+      r2 = rand() % sic + 1;
+      r3 = rand() % sic + 1;    
+      if ((r1 != r2)&&(r1 != r3)&&(r2 != r3)) {
+        break;
+      }
+    }
+    showitems();
+    cout << "Choose upgrade!(1-3) ", cin >> pa;
+    usf();    
+  }
+  if (challangeType == 1) {
+    enemyupgrade();
+  }
   enemyupgrade();
 }
 
@@ -738,9 +758,24 @@ void enemyAI() {    //All Enemy Behaviours
 
 int main() {    //Base for the Game
   srand (time(NULL));
-  cout << "Choose Difficulty 1-5" << endl;
+  cout << "Choose Difficulty 1-5. Type 'other' to show challanges.Type 'fun' for fun gamemodes." << endl;
   cin >> pa;
-  difficultys();
+  if (pa == "other") {
+    cout << "Level 6: Enemy gets 2x Upgrades" << endl;
+
+    cout << "You can still choose normal difficulties(1-5)" << endl;
+    cin >> pa;
+    difficultys();
+  }
+  else if (pa == "fun") {
+    cout << "Level Fun 1: You get 2x Upgrades. Enemy difficulty lvl 5" << endl;
+    cout << "Type 'double'." << endl;
+
+    cout << "You can still choose normal difficulties(1-5)" << endl;
+    cin >> pa;
+    difficultys();
+  }
+  else {difficultys();}
   cout << "'a' to attack, 'd' to add shield!" << endl;
   cout << "Type 'c' to continue!(press 'c') ", cin >> pa;
   while (true) {
