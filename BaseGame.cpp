@@ -488,10 +488,16 @@ void upgradeEnemySelect() {   //Gives Random Upgrade for Enemy
     enemyHealSize += 0.1;
     cout << "Enemy Heal Size +10%" << endl;
   }
+  else if (r4 == 9) {
+    enemyAbUnlockedFlame = true;
+    enemyFireDmg += 1;
+    cout << "Enemy Flame Ability +1" << endl;
+  }
 }
 
 void enemyupgrade() {  //Creates the Random Upgrade Number and Picks it out
   r4 = rand() % sic + 1;
+  r4 = 9;
   upgradeEnemySelect();
 }
 
@@ -560,12 +566,15 @@ void actions() {    //For taking Effect Damage and Allowing Player to do Actions
     defencef();
   }
   else if ((pa == "p")&&(pAbUnlockedPoison == true)) {
+    aiBehaviour_stackShield = 0;
     applyPoison();
   }
   else if ((pa == "h")&&(pAbUnlockedHeal == true)&&(pUsedHeal == false)) {
+    aiBehaviour_stackShield = 0;
     applyHeal();
   }
   else if ((pa == "f")&&(pAbUnlockedFlame == true)) {
+    aiBehaviour_stackShield = 0;
     applyFlame();
   }
   else {cout << "Action Failed..." << endl;}
@@ -573,6 +582,19 @@ void actions() {    //For taking Effect Damage and Allowing Player to do Actions
   if (pStatusType != "none") {
     if ((pStatusType == "Poison")&&(pStatusLenght > 0)) {
       php = php - 1;
+      pStatusLenght -= 1;
+    }
+    if ((pStatusType == "Flame")&&(pStatusLenght > 0)) {
+      if (pdef != 0) {
+        pdef -= enemyDealShieldDmg;
+        if (pdef < 0) {
+          pdef = 0;
+          php -= 1;
+        }
+      }
+      else if (pdef == 0) {
+        php -= enemyFireDmg;
+      }
       pStatusLenght -= 1;
     }
   }    
@@ -585,26 +607,15 @@ void enemyAI() {    //All Enemy Behaviours
   enemymistake = rand() % difficulty + 1;
   aiBehaviour_gainShield = enemymhp * 0.5;
   int enemyGainHp_Heal = enemymhp * enemyHealSize;
+  enemyDealShieldDmg = enemyFireDmg * 2;
   if (enemymistake > 1) {
     if (aiBehaviour_stackShield > 2) {
       cout << "1   Enemy is Shielding Up!" << endl;
       enemydef += enemydefg; 
     }
-    else if (pdmg > enemydefg) {
-      cout << "1   Enemy is Attacking!" << endl;
-      if (pdef == 0) {
-        php = php - enemydmg;
-      }
-      else if (pdef > 0) {
-        pdef = pdef -enemydmg;
-        if (pdef < 0) {
-          php = php + pdef;
-          pdef = 0;    
-        }
-      }
-    }
+
     else if ((enemydmg > pdmg)&&(pdefg < enemydmg)&&(enemyhp > php)) {
-      cout << "2   Enemy is Attacking!" << endl;
+      cout << "1   Enemy is Attacking!" << endl;
       if (pdef == 0) {
         php = php - enemydmg;
       }
@@ -620,6 +631,29 @@ void enemyAI() {    //All Enemy Behaviours
       cout << "1  Enemy does Poison Attack!(" << enemyPoisonLenght << ")" << endl;
       pStatusType = "Poison";
       pStatusLenght = enemyPoisonLenght;
+    }
+    else if ((pdef != 0)&&(enemyAbUnlockedFlame == true)&&(enemyDealShieldDmg >= enemydmg)) {
+      pStatusType = "Flame";
+      pStatusLenght = enemyFireLenght;
+      cout << "1 Enemy does Flame Attack!" << enemyFireDmg << "/" << enemyDealShieldDmg << ")" << endl;
+    }
+    else if ((pdef == 0)&&(enemyFireDmg >= enemydmg)&&(enemyFireDmg > enemyPoisonLenght)&&(pStatusType == "none")) {
+      pStatusType = "Flame";
+      pStatusLenght = enemyFireLenght;
+      cout << "2 Enemy does Flame Attack!" << enemyFireDmg << "/" << enemyDealShieldDmg << ")" << endl;
+    }    
+    else if (pdmg > enemydefg) {
+      cout << "2   Enemy is Attacking!" << endl;
+      if (pdef == 0) {
+        php = php - enemydmg;
+      }
+      else if (pdef > 0) {
+        pdef = pdef -enemydmg;
+        if (pdef < 0) {
+          php = php + pdef;
+          pdef = 0;    
+        }
+      }
     }
     else if ((enemydef == 0)&&(pdef == 0)&&(enemyhp >= aiBehaviour_gainShield)) {
       cout << "3   Enemy is Attacking!" << endl;
@@ -696,10 +730,7 @@ void enemyAI() {    //All Enemy Behaviours
       }
       enemyStatusLenght -= 1;
     }
-    if ((enemyStatusType == "Poison")&&(enemyStatusLenght == 0)) {
-      enemyStatusType = "none";
-    }
-    else if ((enemyStatusType == "Flame")&&(enemyStatusLenght == 0)) {
+    if ((enemyStatusType != "none")&&(enemyStatusLenght == 0)) {
       enemyStatusType = "none";
     }
   }

@@ -13,3 +13,33 @@ Abilities(Player/enemy): Flame Damage(hpDamage/shieldDamage),
 2/4  0/0
 End of Game! 
 
+Difficulty lvl 1:
+Wins/Losses
+6 0
+Stats : hp, dmg, defg ;
+10 3 5
+Enemy: hp, dmg, defg ;
+10 1 2
+Abilities(Player/enemy): PoisonLen,
+6 0
+Abilities(Player/enemy): HealSize,
+0%  0%
+Abilities(Player/enemy): Flame Damage(hpDamage/shieldDamage),
+0/0  5/10
+End of Game! 
+
+Difficulty lvl 1:
+Wins/Losses
+49 0
+Stats : hp, dmg, defg ;
+175 13 30
+Enemy: hp, dmg, defg ;
+10 1 2
+Abilities(Player/enemy): PoisonLen,
+0 0
+Abilities(Player/enemy): HealSize,
+150%  0%
+Abilities(Player/enemy): Flame Damage(hpDamage/shieldDamage),
+0/0  51/102
+End of Game! 
+
