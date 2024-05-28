@@ -181,6 +181,21 @@ void showitems() {    //Shows Available Upgrades
     cout << "|  to shields.  |" << endl;
     cout << "|---------------|" << endl;
   } 
+  else if (r1 == 10) {
+    cout << "_________________" << endl;
+    cout << "|  Earth Wall   |" << endl;
+    cout << "|---------------|" << endl;
+    cout << "| Press 'w' to  |" << endl;
+    cout << "| create a wall |" << endl;
+    cout << "|  that blocks  |" << endl;
+    cout << "|  all normal   |" << endl;
+    cout << "| attack damage |" << endl;
+    cout << "|  for 2 turns. |" << endl;
+    cout << "|   Blocks all  |" << endl;
+    cout << "|    incoming   |" << endl;
+    cout << "|  spells also. |" << endl;
+    cout << "|---------------|" << endl;
+  }
 
     if (r2 == 1) {
     cout << "_____________" << endl;
@@ -269,6 +284,21 @@ void showitems() {    //Shows Available Upgrades
     cout << "|  to shields.  |" << endl;
     cout << "|---------------|" << endl;
   }  
+  else if (r2 == 10) {
+    cout << "_________________" << endl;
+    cout << "|  Earth Wall   |" << endl;
+    cout << "|---------------|" << endl;
+    cout << "| Press 'w' to  |" << endl;
+    cout << "| create a wall |" << endl;
+    cout << "|  that blocks  |" << endl;
+    cout << "|  all normal   |" << endl;
+    cout << "| attack damage |" << endl;
+    cout << "|  for 2 turns. |" << endl;
+    cout << "|   Blocks all  |" << endl;
+    cout << "|    incoming   |" << endl;
+    cout << "|  spells also. |" << endl;
+    cout << "|---------------|" << endl;
+  }
 
   if (r3 == 1) {
     cout << "_____________" << endl;
@@ -356,7 +386,22 @@ void showitems() {    //Shows Available Upgrades
     cout << "| to hp and x2  |" << endl;
     cout << "|  to shields.  |" << endl;
     cout << "|---------------|" << endl;
-  } 
+  }
+  else if (r3 == 10) {
+    cout << "_________________" << endl;
+    cout << "|  Earth Wall   |" << endl;
+    cout << "|---------------|" << endl;
+    cout << "| Press 'w' to  |" << endl;
+    cout << "| create a wall |" << endl;
+    cout << "|  that blocks  |" << endl;
+    cout << "|  all normal   |" << endl;
+    cout << "| attack damage |" << endl;
+    cout << "|  for 2 turns. |" << endl;
+    cout << "|   Blocks all  |" << endl;
+    cout << "|    incoming   |" << endl;
+    cout << "|  spells also. |" << endl;
+    cout << "|---------------|" << endl;
+  }
 }
 
 void usf() {    //For Giving Correct Upgrade for Chosen Card
@@ -573,7 +618,7 @@ void applyFlame() {   //Apply Flame to Enemy deal 2x Damage to Shield
     enemyStatusLenght = pFireLenght;
     cout << "Succesfully Applied Flame!(" << pFireDmg << "/" << pDealShieldDmg << ")" << endl;
   }
-  else {cout << "Failed to Aplly Flame" << endl;}
+  else {cout << "Failed to Aplly Flame!" << endl;}
 }
 
 void actions() {    //For taking Effect Damage and Allowing Player to do Actions
@@ -758,18 +803,18 @@ void enemyAI() {    //All Enemy Behaviours
 
 int main() {    //Base for the Game
   srand (time(NULL));
-  cout << "Choose Difficulty 1-5. Type 'other' to show challanges.Type 'fun' for fun gamemodes." << endl;
+  cout << "Choose Difficulty 1-5. Type 'other' to show challanges. Type 'fun' for fun gamemodes." << endl;
   cin >> pa;
   if (pa == "other") {
-    cout << "Level 6: Enemy gets 2x Upgrades" << endl;
+    cout << ">>>Level 6: Enemy gets 2x Upgrades" << endl;
 
-    cout << "You can still choose normal difficulties(1-5)" << endl;
+    cout << "You can still choose normal difficulties(1-5)." << endl;
     cin >> pa;
     difficultys();
   }
   else if (pa == "fun") {
-    cout << "Level Fun 1: You get 2x Upgrades. Enemy difficulty lvl 5" << endl;
-    cout << "Type 'double'." << endl;
+    cout << ">>>Level Fun 1: You get 2x Upgrades. Enemy difficulty lvl 5." << endl;
+    cout << "   Type 'double'." << endl;
 
     cout << "You can still choose normal difficulties(1-5)" << endl;
     cin >> pa;
