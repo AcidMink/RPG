@@ -21,13 +21,15 @@ int enemyStatusLenght;    //How Long is a Status Effect on Enemy for
 string enemyStatusType = "none";    //What Status Type is on Enemy
 
 int enemyPoisonLenght;    //How Long Enemy Gives Poison for
-bool enemyAbUnlockedHeal = false;
+bool enemyAbUnlockedHeal = false;     //Has Enemy Unlocked Heal
 float enemyHealSize;    //How much % of Hp it Heals
 bool enemyUsedHeal = false;    //Enemy use Heal Once in Round
 bool enemyAbUnlockedFlame = false;    //Has Enemy Unlocked Flame
 int enemyFireLenght = 2;    //How many Turns Flame Lasts
 int enemyFireDmg;   //Enemy Flame Non-Shield Dmg
 int enemyDealShieldDmg;   //Damage the Enemy does to Shields
+bool enemyAbUnlocked_earthWall = false;   //Has enemy Unlocked Earth Wall
+int enemyEarthWallLenght;   //How Long Earth Wall Lasts
 
 
 int php = 10;   //Player HP in Round
@@ -48,7 +50,8 @@ bool pAbUnlockedFlame = false;    //Has Player Unlocked Flame
 int pFireLenght = 2;    //How many Turns Flame Lasts
 int pFireDmg;   //Flame Non-Shield Dmg
 int pDealShieldDmg;   //Dmage the Player does to Shields
-
+bool pAbUnlocked_earthWall = false;   //Has enemy Unlocked Earth Wall
+int pEarthWallLenght = 2;   //How Long Earth Wall Lasts
 
 
 int aiBehaviour_gainShield;   //Behaviour for Focusing on Shieding when HP Drops Below 50%
@@ -59,7 +62,7 @@ int difficulty = 100;   //For calculating enemy defence freq.
 int challangeType;
 int funType;
 int roundc = 0;   //Round Count
-int sic = 9;  //Shop Item Count
+int sic = 10;  //Shop Item Count
 
 int r1;   //Shop rn item 1
 int r2;   //Shop rn item 2
@@ -89,6 +92,7 @@ void difficultys() {    //Set the Difficulty for a the Game
   else if (pa == "5") {difficulty = 10; infoSave("Difficulty lvl 5:");}
   else if (pa == "6") {difficulty = 10; challangeType = 1; infoSave("Difficulty lvl 6:");}
   else if (pa == "double") {difficulty = 10; funType = 1; infoSave("Difficulty lvl 5(fun):");}
+  else if (pa == "ultra") {difficulty = 10; funType = 1; challangeType = 1; infoSave("Difficulty lvl 6(fun):");}
   else if (pa == "0") {difficulty = 1; infoSave("Difficulty lvl 0:");}
   else {cout << "Impossible Selected" << endl; infoSave("Difficulty lvl 100:");}
 }
@@ -190,10 +194,9 @@ void showitems() {    //Shows Available Upgrades
     cout << "|  that blocks  |" << endl;
     cout << "|  all normal   |" << endl;
     cout << "| attack damage |" << endl;
-    cout << "|  for 2 turns. |" << endl;
-    cout << "|   Blocks all  |" << endl;
-    cout << "|    incoming   |" << endl;
-    cout << "|  spells also. |" << endl;
+    cout << "| for +1 turns. |" << endl;
+    cout << "|    Lose all   |" << endl;
+    cout << "|  current def. |" << endl;
     cout << "|---------------|" << endl;
   }
 
@@ -293,10 +296,9 @@ void showitems() {    //Shows Available Upgrades
     cout << "|  that blocks  |" << endl;
     cout << "|  all normal   |" << endl;
     cout << "| attack damage |" << endl;
-    cout << "|  for 2 turns. |" << endl;
-    cout << "|   Blocks all  |" << endl;
-    cout << "|    incoming   |" << endl;
-    cout << "|  spells also. |" << endl;
+    cout << "| for +1 turns. |" << endl;
+    cout << "|    Lose all   |" << endl;
+    cout << "|  current def. |" << endl;
     cout << "|---------------|" << endl;
   }
 
@@ -396,11 +398,16 @@ void showitems() {    //Shows Available Upgrades
     cout << "|  that blocks  |" << endl;
     cout << "|  all normal   |" << endl;
     cout << "| attack damage |" << endl;
-    cout << "|  for 2 turns. |" << endl;
-    cout << "|   Blocks all  |" << endl;
-    cout << "|    incoming   |" << endl;
-    cout << "|  spells also. |" << endl;
+    cout << "| for +1 turns. |" << endl;
+    cout << "|    Lose all   |" << endl;
+    cout << "|  current def. |" << endl;
     cout << "|---------------|" << endl;
+  }
+  else if (r3 == 11) {
+    cout << "________________" << endl;
+    cout << "|    Cleanse   |" << endl;
+    cout << "|--------------|" << endl;
+    cout << "|--------------|" << endl;
   }
 }
 
@@ -436,6 +443,10 @@ void usf() {    //For Giving Correct Upgrade for Chosen Card
       pAbUnlockedFlame = true;
       pFireDmg += 1;
     }
+    else if (r1 == 10) {
+      pAbUnlocked_earthWall = true;
+      pEarthWallLenght += 1;
+    }
   }
   else if (pa == "2") {
     if (r2 == 1) {
@@ -467,6 +478,10 @@ void usf() {    //For Giving Correct Upgrade for Chosen Card
     else if (r2 == 9) {
       pAbUnlockedFlame = true;
       pFireDmg += 1;
+    }
+    else if (r2 == 10) {
+      pAbUnlocked_earthWall = true;
+      pEarthWallLenght += 1;
     }
   }
 
@@ -500,6 +515,10 @@ void usf() {    //For Giving Correct Upgrade for Chosen Card
     else if (r3 == 9) {
       pAbUnlockedFlame = true;
       pFireDmg += 1;
+    }
+    else if (r3 == 10) {
+      pAbUnlocked_earthWall = true;
+      pEarthWallLenght += 1;
     }
   }
 }
@@ -542,6 +561,11 @@ void upgradeEnemySelect() {   //Gives Random Upgrade for Enemy
     enemyAbUnlockedFlame = true;
     enemyFireDmg += 1;
     cout << "Enemy Flame Ability +1" << endl;
+  }
+  else if (r4 == 10) {
+    enemyAbUnlocked_earthWall = true;
+    enemyEarthWallLenght += 1;
+    cout << "Enemy Earth Wall Lenght +1" << endl;
   }
 }
 
@@ -620,11 +644,24 @@ void applyFlame() {   //Apply Flame to Enemy deal 2x Damage to Shield
   }
   else {cout << "Failed to Aplly Flame!" << endl;}
 }
+void applyEarthWall() {
+  if (pStatusType == "none") {
+    pStatusType = "E Wall";
+    pStatusLenght = pEarthWallLenght;
+    pdef = 0;
+    cout << "Succesfully Casted Earth Wall!(" << pEarthWallLenght << ")" << endl;
+  }
+  else {cout << "Failed to Aplly Earth Wall!" << endl;}
+}
+
 
 void actions() {    //For taking Effect Damage and Allowing Player to do Actions
-  if (pa == "a") {
+  if ((pa == "a")&&(enemyStatusType != "E Wall")) {
     aiBehaviour_stackShield = 0;
     attackf();
+  }
+  else if ((pa == "a")&&(enemyStatusType == "E Wall")) {
+    cout << "Attack Failed due to Enemy Earth Wall" << endl;
   }
   else if (pa == "d") {
     aiBehaviour_stackShield += 1;
@@ -641,6 +678,10 @@ void actions() {    //For taking Effect Damage and Allowing Player to do Actions
   else if ((pa == "f")&&(pAbUnlockedFlame == true)) {
     aiBehaviour_stackShield = 0;
     applyFlame();
+  }
+  else if ((pa == "w")&&(pAbUnlocked_earthWall == true)) {
+    aiBehaviour_stackShield = 0;
+    applyEarthWall();
   }
   else {cout << "Action Failed..." << endl;}
 
@@ -662,6 +703,10 @@ void actions() {    //For taking Effect Damage and Allowing Player to do Actions
       }
       pStatusLenght -= 1;
     }
+    if ((pStatusType == "E Wall")&&(pStatusLenght > 0)) {
+      pdef = 0;
+      pStatusLenght -= 1;
+    }
   }    
   if ((pStatusType != "none")&&(pStatusLenght == 0)) {
       pStatusType = "none";
@@ -674,8 +719,20 @@ void enemyAI() {    //All Enemy Behaviours
   int enemyGainHp_Heal = enemymhp * enemyHealSize;
   enemyDealShieldDmg = enemyFireDmg * 2;
   if (enemymistake > 1) {
-    if (aiBehaviour_stackShield > 2) {
-      cout << "1   Enemy is Shielding Up!" << endl;
+    if (pStatusType == "E Wall") {
+      if ((enemyAbUnlocked_earthWall == true)&&(enemyStatusType == "none")) {
+        enemyStatusType = "E Wall";
+        enemyStatusLenght = enemyEarthWallLenght;
+        enemydef = 0;
+        cout << "1   Enemy Casts Earth Wall!" << endl;
+      }
+      else {
+        cout << "1   Enemy is Shielding Up!" << endl;
+        enemydef += enemydefg; 
+      }
+    }
+    else if (aiBehaviour_stackShield > 2) {
+      cout << "2   Enemy is Shielding Up!" << endl;
       enemydef += enemydefg; 
     }
 
@@ -739,11 +796,11 @@ void enemyAI() {    //All Enemy Behaviours
       cout << "1  Enemy Used Heal!(" << enemyGainHp_Heal << ")" << endl;
     }
     else if ((enemydef == 0)&&(pdef == 0)&&(enemyhp < aiBehaviour_gainShield)) {
-      cout << "2   Enemy is Shielding Up!" << endl;
+      cout << "3   Enemy is Shielding Up!" << endl;
       enemydef += enemydefg; 
     }    
     else if ((enemydef == 0)&&(pdef != 0)) {
-      cout << "3   Enemy is Shielding Up!" << endl;
+      cout << "4   Enemy is Shielding Up!" << endl;
       enemydef += enemydefg; 
     }
     else if ((enemydef != 0)&&(pdef != 0)) {
@@ -782,7 +839,7 @@ void enemyAI() {    //All Enemy Behaviours
       enemyhp -= 1;
       enemyStatusLenght -= 1;
     }
-    else if ((enemyStatusType == "Flame")&&(enemyStatusLenght > 0)) {
+    if ((enemyStatusType == "Flame")&&(enemyStatusLenght > 0)) {
       if (enemydef != 0) {
         enemydef -= pDealShieldDmg;
         if (enemydef < 0) {
@@ -793,6 +850,10 @@ void enemyAI() {    //All Enemy Behaviours
       else if (enemydef == 0) {
         enemyhp -= pFireDmg;
       }
+      enemyStatusLenght -= 1;
+    }
+    if ((enemyStatusType == "E Wall")&&(enemyStatusLenght > 0)) {
+      enemydef = 0;
       enemyStatusLenght -= 1;
     }
     if ((enemyStatusType != "none")&&(enemyStatusLenght == 0)) {
@@ -815,8 +876,10 @@ int main() {    //Base for the Game
   else if (pa == "fun") {
     cout << ">>>Level Fun 1: You get 2x Upgrades. Enemy difficulty lvl 5." << endl;
     cout << "   Type 'double'." << endl;
+    cout << ">>>Level Fun 2: You get 2x Upgrades. Enemy gets 2x Upgrades. Enemy difficulty lvl 5." << endl;
+    cout << "   Type 'ultra'." << endl;
 
-    cout << "You can still choose normal difficulties(1-5)" << endl;
+    cout << ">>>You can still choose normal difficulties(1-5)" << endl;
     cin >> pa;
     difficultys();
   }
@@ -905,6 +968,11 @@ int main() {    //Base for the Game
         string senemyDealShieldDmg = to_string(enemyDealShieldDmg);
         string sFlameInfo = spFlameDmg + "/" + spDealShieldDmg + "  " + senemyFlameDmg + "/" + senemyDealShieldDmg;
         infoSave(sFlameInfo);
+        string senemyEarthWallLenght = to_string(enemyEarthWallLenght);
+        string spEarthWallLenght = to_string(pEarthWallLenght);
+        string sEarthWall = spEarthWallLenght + "  " + senemyEarthWallLenght;
+        infoSave("Abilities(Player/enemy): Earth Wall Lenght,");
+        infoSave(sEarthWall);
         infoSave("End of Game! \n");
         break;
       }

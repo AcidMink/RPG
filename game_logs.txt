@@ -13,3 +13,37 @@ Abilities(Player/enemy): Flame Damage(hpDamage/shieldDamage),
 0/0  0/0
 End of Game! 
 
+Difficulty lvl 5(fun):
+Wins/Losses
+6 6
+Stats : hp, dmg, defg ;
+20 6 10
+Enemy: hp, dmg, defg ;
+40 8 4
+Abilities(Player/enemy): PoisonLen,
+6 3
+Abilities(Player/enemy): HealSize,
+60%  0%
+Abilities(Player/enemy): Flame Damage(hpDamage/shieldDamage),
+1/2  1/2
+Abilities(Player/enemy): Earth Wall Lenght,
+8  1
+End of Game! 
+
+Difficulty lvl 6(fun):
+Wins/Losses
+13 0
+Stats : hp, dmg, defg ;
+35 23 26
+Enemy: hp, dmg, defg ;
+50 11 13
+Abilities(Player/enemy): PoisonLen,
+0 6
+Abilities(Player/enemy): HealSize,
+30%  30%
+Abilities(Player/enemy): Flame Damage(hpDamage/shieldDamage),
+0/0  2/4
+Abilities(Player/enemy): Earth Wall Lenght,
+2  2
+End of Game! 
+
